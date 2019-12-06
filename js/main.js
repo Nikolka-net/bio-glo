@@ -72,7 +72,9 @@ const sendForm = () => {
     errorMessage = 'Что-то пошло не так...';
 
   const mainForm = document.querySelector('.main-form'),
-    captureForm = document.querySelector('.capture-form'),
+    captureForm = document.querySelectorAll('.capture-form')[0],
+    // captureForm1 = document.querySelectorAll('.capture-form')[1],
+    // captureForm2 = document.querySelectorAll('.capture-form')[2],
     input = document.querySelectorAll('input');
 
   const inputNameTel = () => {//ввод. в инпут только цифры и кириллица
@@ -170,9 +172,13 @@ const sendForm = () => {
     valid(event, mainForm);
   });
 
+
+
   captureForm.addEventListener('submit', (event) => {
     valid(event, captureForm);
   });
+
+
 
   const postData = (body) => {//ф. отправки запроса
     return fetch('./server.php', {//отправка запроса на сервер с по-ю промисов
@@ -192,3 +198,47 @@ const sendForm = () => {
 
 sendForm();
 
+//AccordionTwo
+
+const accordionTwo = () => {
+
+  const btnAccordionTwo = document.querySelectorAll(`a[data-parent="#accordion-two"]`),
+    collapseOne = document.querySelector('.collapseOne'),
+    collapseTwo = document.querySelector('.collapseTwo'),
+    collapseThree = document.querySelector('.collapseThree');
+
+  btnAccordionTwo.forEach((elem) => {
+    elem.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (elem.closest('#headingOne-two')) {
+
+        if (collapseOne.style.display === 'none') {
+          collapseOne.style.display = 'block';
+        } else {
+          collapseOne.style.display = 'none';
+        }
+      }
+
+      if (elem.closest('#headingTwo-two')) {
+
+        if (collapseTwo.style.display === 'block') {
+          collapseTwo.style.display = 'none';
+        } else {
+          collapseTwo.style.display = 'block';
+        }
+      }
+
+      if (elem.closest('#headingThree-two')) {
+
+        if (collapseThree.style.display === 'block') {
+          collapseThree.style.display = 'none';
+        } else {
+          collapseThree.style.display = 'block';
+        }
+      }
+    });
+
+  });
+
+};
+accordionTwo();
