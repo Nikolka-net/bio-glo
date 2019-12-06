@@ -2,27 +2,22 @@
 
 //Мodal window
 
-//Popup-call
+//Popup-call, popup-discount
 
-const popupCall = () => {
+const btnAlertModal = (btn, popupWindow, popupWindowContent) => {//вызов модального окна
 
-  const popupCall = document.querySelector('.popup-call'),
-    callBtn = document.querySelectorAll('.call-btn'),
-    popupContent = document.querySelector('.popup-content');
   let count = 0;
-
-
-  callBtn.forEach((elem) => {
-    elem.addEventListener('click', () => {
+  btn.forEach((elem) => {
+    elem.addEventListener('click', (event) => {
       event.preventDefault();
-      popupCall.style.display = 'block';
-      popupContent.style.cssText = `border: 2px solid #90c406; box-shadow: 2px 4px 10px #222`;
+      popupWindow.style.display = 'block';
+      popupWindowContent.style.cssText = `border: 2px solid #90c406; box-shadow: 2px 4px 10px #222`;
       let popupInterval;
       const popupOpacity = function () {
         popupInterval = requestAnimationFrame(popupOpacity);
         count++;
         if (count <= 100) {//уменьшаем прозрачность
-          popupContent.style.opacity = count + '%';
+          popupWindowContent.style.opacity = count + '%';
         } else {
           cancelAnimationFrame(popupInterval);
         }
@@ -31,15 +26,13 @@ const popupCall = () => {
 
     });
   });
-
-  popupCall.addEventListener('click', (event) => {
+  popupWindow.addEventListener('click', (event) => {
     event.preventDefault();//чтобы не было прокрутки вверх 
 
     const countPopupNone = () => {//окно исчезает
-      popupCall.style.display = 'none';
+      popupWindow.style.display = 'none';
       count = 0;
     };
-
     let target = event.target;
     if (target.matches('.popup-close')) {
       countPopupNone();
@@ -49,13 +42,27 @@ const popupCall = () => {
         countPopupNone();//окно исчезает при клике за пределы окна
       }
     }
-
   });
-
-
 };
 
+const popupCall = () => {
+  const popupCall = document.querySelector('.popup-call'),
+    callBtn = document.querySelectorAll('.call-btn'),
+    popupContentCall = document.querySelectorAll('.popup-content')[0];
+
+  btnAlertModal(callBtn, popupCall, popupContentCall);
+};
 popupCall();
+
+const popupDiscount = () => {
+  const btnDiscount = document.querySelectorAll('.discount-btn'),
+    popupDiscount = document.querySelector('.popup-discount'),
+    popupContentDiscount = document.querySelectorAll('.popup-content')[1];
+
+  btnAlertModal(btnDiscount, popupDiscount, popupContentDiscount);
+};
+popupDiscount();
+
 
 //Send form
 
@@ -68,7 +75,7 @@ const sendForm = () => {
     captureForm = document.querySelector('.capture-form'),
     input = document.querySelectorAll('input');
 
-  const regexp = () => {//ввод. в инпут только цифры и кириллица
+  const inputNameTel = () => {//ввод. в инпут только цифры и кириллица
 
     input.forEach((elem) => {
       elem.addEventListener('input', () => {
@@ -84,7 +91,7 @@ const sendForm = () => {
 
     });
   };
-  regexp();
+  inputNameTel();
 
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = `font-size: 2rem; color: ##90c406`;
@@ -184,3 +191,4 @@ const sendForm = () => {
 };
 
 sendForm();
+
