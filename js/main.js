@@ -214,25 +214,38 @@ const accordionTwo = () => {
 
         if (collapseOne.style.display === 'none') {
           collapseOne.style.display = 'block';
+          collapseTwo.style.display = 'none';
+          collapseThree.style.display = 'none';
+
         } else {
-          collapseOne.style.display = 'none';
+          collapseOne.style.display = 'block';
+          collapseTwo.style.display = 'none';
+          collapseThree.style.display = 'none';
         }
       }
 
       if (elem.closest('#headingTwo-two')) {
 
         if (collapseTwo.style.display === 'block') {
-          collapseTwo.style.display = 'none';
-        } else {
+          collapseOne.style.display = 'none';
           collapseTwo.style.display = 'block';
+          collapseThree.style.display = 'none';
+        } else {
+          collapseOne.style.display = 'none';
+          collapseTwo.style.display = 'block';
+          collapseThree.style.display = 'none';
         }
       }
 
       if (elem.closest('#headingThree-two')) {
 
         if (collapseThree.style.display === 'block') {
-          collapseThree.style.display = 'none';
+          collapseOne.style.display = 'none';
+          collapseTwo.style.display = 'none';
+          collapseThree.style.display = 'block';
         } else {
+          collapseOne.style.display = 'none';
+          collapseTwo.style.display = 'none';
           collapseThree.style.display = 'block';
         }
       }
