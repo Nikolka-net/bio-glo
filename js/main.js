@@ -2,7 +2,7 @@
 
 //Мodal window
 
-//Popup-call, popup-discount
+//Popup-call, popup-discount, popup-check
 
 const btnAlertModal = (btn, popupWindow, popupWindowContent) => {//вызов модального окна
 
@@ -62,6 +62,17 @@ const popupDiscount = () => {
   btnAlertModal(btnDiscount, popupDiscount, popupContentDiscount);
 };
 popupDiscount();
+
+
+const popupCheck = () => {
+  const btnCheck = document.querySelectorAll('.gauging-button'),
+    popupCheck = document.querySelector('.popup-check'),
+    popupContentCheck = document.querySelectorAll('.popup-content')[2];
+
+
+  btnAlertModal(btnCheck, popupCheck, popupContentCheck);
+};
+popupCheck();
 
 
 //Send form
@@ -255,3 +266,6 @@ const accordionTwo = () => {
 
 };
 accordionTwo();
+
+
+
