@@ -2,7 +2,7 @@
 
 //Мodal window
 
-//Popup-call, popup-discount, popup-check
+//Popup-call, popup-discount, popup-check, popup-consultation
 
 const btnAlertModal = (btn, popupWindow, popupWindowContent) => {//вызов модального окна
 
@@ -27,7 +27,6 @@ const btnAlertModal = (btn, popupWindow, popupWindowContent) => {//вызов м
     });
   });
   popupWindow.addEventListener('click', (event) => {
-    event.preventDefault();//чтобы не было прокрутки вверх 
 
     const countPopupNone = () => {//окно исчезает
       popupWindow.style.display = 'none';
@@ -74,6 +73,15 @@ const popupCheck = () => {
 };
 popupCheck();
 
+const popupConsultation = () => {
+  const btnConsultation = document.querySelectorAll('.consultation-btn'),
+    popupConsultation = document.querySelector('.popup-consultation'),
+    popupContentConsultation = document.querySelectorAll('.popup-content')[3];
+
+  btnAlertModal(btnConsultation, popupConsultation, popupContentConsultation);
+};
+popupConsultation();
+
 
 //Send form
 
@@ -84,8 +92,11 @@ const sendForm = () => {
 
   const mainForm = document.querySelector('.main-form'),
     captureForm = document.querySelectorAll('.capture-form')[0],
-    // captureForm1 = document.querySelectorAll('.capture-form')[1],
-    // captureForm2 = document.querySelectorAll('.capture-form')[2],
+    callForm = document.querySelectorAll('.capture-form')[1],
+    discountForm = document.querySelectorAll('.capture-form')[2],
+    checkForm = document.querySelectorAll('.capture-form')[3],
+    directorForm = document.querySelector('.director-form'),
+    consultationForm = document.querySelectorAll('.capture-form')[4],
     input = document.querySelectorAll('input');
 
   const inputNameTel = () => {//ввод. в инпут только цифры и кириллица
@@ -100,6 +111,10 @@ const sendForm = () => {
           elem.value = elem.value.replace(/\D/, '');
         }
 
+        if (elem.name === 'user_quest') {
+          elem.value = elem.value.replace(/[^a-zа-яё\s\d?!\.,:;]/ig, '');
+        }
+
       });
 
     });
@@ -109,11 +124,19 @@ const sendForm = () => {
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = `font-size: 2rem; color: ##90c406`;
 
-  const getForm = (event, form) => {
+  const getForm = (event, form, form2) => {
     event.preventDefault();//чтобы страница не перезагружалась по умолчанию
     form.appendChild(statusMessage);
     statusMessage.textContent = loadMessage;//идёт загрузка
+
     let formData = new FormData(form);//получ. данные нашей формы c атрибутом name в объект
+    if (form2) {
+      for (const elem of form2.elements) {//вытаскиваем из формы инпуты
+        if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+          formData.append(elem.name, elem.value);//добавляем ключ и значение в formData
+        }
+      }
+    }
 
     let body = {};//объект, ко-й отправл. на сервер в формате json
 
@@ -135,18 +158,28 @@ const sendForm = () => {
       });
   };
 
-  const inputReset = (form) => {
-    setTimeout(() => {//очистка сообщений
-      form.removeChild(statusMessage);
-    }, 3000);
+  const inputReset = (form, form2) => {
+
     for (const elem of form.elements) {//очистка инпутов
       if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
         elem.value = '';
       }
     }
+    if (form2) {
+
+      for (const elem of form2.elements) {//очистка инпутов
+        if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+          elem.value = '';
+        }
+      }
+    }
+
+    setTimeout(() => {//очистка сообщений
+      form.removeChild(statusMessage);
+    }, 3000);
   };
 
-  function valid(event, form) {
+  function valid(event, form, form2) {
     const elementsForm = [];//пустой массив для инпутов
     const error = new Set();//массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
 
@@ -174,8 +207,8 @@ const sendForm = () => {
 
     });
     if (!error.size) {//если size не содержит ошибки (в Set);size коли-во эл. в массиве Set
-      getForm(event, form);
-      inputReset(form);
+      getForm(event, form, form2);
+      inputReset(form, form2);
     }
   }
 
@@ -183,12 +216,25 @@ const sendForm = () => {
     valid(event, mainForm);
   });
 
-
-
   captureForm.addEventListener('submit', (event) => {
     valid(event, captureForm);
   });
 
+  callForm.addEventListener('submit', (event) => {
+    valid(event, callForm);
+  });
+
+  discountForm.addEventListener('submit', (event) => {
+    valid(event, discountForm);
+  });
+
+  checkForm.addEventListener('submit', (event) => {
+    valid(event, checkForm);
+  });
+
+  consultationForm.addEventListener('submit', (event) => {
+    valid(event, consultationForm, directorForm);
+  });
 
 
   const postData = (body) => {//ф. отправки запроса

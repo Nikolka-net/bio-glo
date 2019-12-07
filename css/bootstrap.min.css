@@ -4393,18 +4393,6 @@ input[type=submit].btn-block {
   display: none
 }
 
-.collapseOne {
-  display: block;
-}
-
-.collapseTwo {
-  display: none;
-}
-
-.collapseThree {
-  display: none;
-}
-
 .collapse.in {
   display: block
 }

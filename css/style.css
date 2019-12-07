@@ -1033,6 +1033,28 @@ header .logo img {
   font-family: 'MuseoSansCyrl_bold', sans-serif
 }
 
+/* my cod */
+.collapseOne {
+  display: block;
+}
+
+.collapseTwo {
+  display: none;
+}
+
+.collapseThree {
+  display: none;
+}
+
+/* .popup-consultation {
+  display: block;
+} */
+
+/* .popup-call {
+  display: block;
+} */
+
+/* end */
 @media (max-width:1199px) {
   header .logo p {
     font-size: .9rem
