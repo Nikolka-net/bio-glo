@@ -47,6 +47,7 @@ const modalWindow = () => {
     btnAlertModal(callBtn, popupCall, popupContentCall);
   };
   popupCall();
+
   //Popup-discount
   const popupDiscount = () => {
     const btnDiscount = document.querySelectorAll('.discount-btn'),
@@ -56,11 +57,12 @@ const modalWindow = () => {
     btnAlertModal(btnDiscount, popupDiscount, popupContentDiscount);
   };
   popupDiscount();
+
   //Popup-discount-calculation
   const popupDiscountCalc = () => {
     const btnDiscountCalc = document.querySelectorAll('.btnFour'),
       popupDiscountCalc = document.querySelector('.popup-discount-calculation'),
-      popupContentDiscountCalc = document.querySelectorAll('.popup-content')[2];
+      popupContentDiscountCalc = document.querySelectorAll('.popup-content')[4];
 
     btnAlertModal(btnDiscountCalc, popupDiscountCalc, popupContentDiscountCalc);
   };

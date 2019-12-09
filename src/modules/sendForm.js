@@ -7,10 +7,10 @@ const sendForm = () => {
     captureForm = document.querySelectorAll('.capture-form')[0],
     callForm = document.querySelectorAll('.capture-form')[1],
     discountForm = document.querySelectorAll('.capture-form')[2],
-    discountCalcForm = document.querySelectorAll('.capture-form')[3],
-    checkForm = document.querySelectorAll('.capture-form')[4],
+    discountCalcForm = document.querySelectorAll('.capture-form')[5],
+    checkForm = document.querySelectorAll('.capture-form')[3],
     directorForm = document.querySelector('.director-form'),
-    consultationForm = document.querySelectorAll('.capture-form')[5],
+    consultationForm = document.querySelectorAll('.capture-form')[4],
     input = document.querySelectorAll('input');
 
   const inputNameTel = () => {//ввод. в инпут только цифры и кириллица
@@ -27,6 +27,9 @@ const sendForm = () => {
 
         if (elem.name === 'user_quest') {
           elem.value = elem.value.replace(/[^a-zа-яё\s\d?!\.,:;]/ig, '');
+        }
+        if (elem.matches('.distance')) {
+          elem.value = elem.value.replace(/\D/, '');
         }
 
       });
@@ -209,6 +212,7 @@ const sendForm = () => {
         //1 колодец
 
         formControl.forEach((elem) => {
+
           elem.addEventListener('change', () => {
 
             if (formDiameterOne.value === '1.4 метра') {
@@ -397,6 +401,10 @@ const sendForm = () => {
     });
 
     //Dimeter and number 
+    const resetObj2 = () => {//очистка объекта от ненужных значений
+      obj2.diameter2 = '';
+      obj2.number2 = '';
+    };
 
     formControl.forEach((elem) => {
       elem.addEventListener('change', () => {
@@ -416,15 +424,11 @@ const sendForm = () => {
           } else if (elem === formNumberOne) {
             obj2.number1 = elem.value;
           }
-
-          const resetObj2 = () => {//очистка объекта от ненужных значений
-            obj2.diameter2 = '';
-            obj2.number2 = '';
-          };
-          resetObj2();
+          resetObj2();//очистка значений при 1 колодце
         }
       });
     });
+
     //Input distance
     inputDistance.addEventListener('input', () => {
       obj2.result = +calcResult.value;
@@ -433,6 +437,9 @@ const sendForm = () => {
 
     btnFour.addEventListener('click', () => {//закрываем последний блок при нажатии на кнопку "получить расчёт"
       reset();
+      if (sumpTwo.style.display === 'none') {//проверка при выборе 1 колодца
+        resetObj2();//очистка значений
+      }
       if (collapseFourId.style.display === 'block') {
         collapseFourId.style.display = 'none';
       }
@@ -443,14 +450,20 @@ const sendForm = () => {
       inputDistance.value = '';
     };
 
-    const resetObj = (obj) => {//очистка объекта
+    const resetObj = () => {//очистка объекта
+      obj = {
+        priseOne: 10000,
+        priseTwo: 15000,
+        wellTwo: 0,
+        wellOne: 0
+      };
       obj2 = {
         result: 0,
         distance: 0,
         diameter1: '1.4 метра',
         diameter2: '1.4 метра',
         number1: '1 штука',
-        number2: '1 штука',
+        number2: '1 штука'
       };
       formDiameterOne.value = '1.4 метра';
       formNumberOne.value = '1 штука';
@@ -460,7 +473,7 @@ const sendForm = () => {
 
     discountCalcForm.addEventListener('submit', (event) => {//отправка формы
       valid(event, discountCalcForm, null, obj2);
-      resetObj(obj2);
+      resetObj();
     });
   };
 
