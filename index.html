@@ -159,7 +159,7 @@
                                     </div>
                                     <img class="type-septic" src="img/constructor/type-septic-two.png" alt="septic">
                                     <p>камерный</p>
-                                    <a class="button construct-btn collapsed" data-toggle="collapse"
+                                    <a class="button btnOne construct-btn collapsed" data-toggle="collapse"
                                         data-parent="#accordion" href="#collapseTwo"><span>Следующий шаг</span></a>
                                 </div>
                             </div>
@@ -195,24 +195,26 @@
                                         </select>
                                     </div>
 
-                                    <div class="title-text">второй колодец (дренажный)</div>
-                                    <div class="select-box">
-                                        <p><strong>Диаметр</strong></p>
-                                        <select class="form-control expand">
-                                            <option>1.4 метра</option>
-                                            <option>2 метра</option>
-                                        </select>
+                                    <div class="sumpTwo">
+                                        <div class="title-text">второй колодец (дренажный)</div>
+                                        <div class="select-box">
+                                            <p><strong>Диаметр</strong></p>
+                                            <select class="form-control expand">
+                                                <option>1.4 метра</option>
+                                                <option>2 метра</option>
+                                            </select>
+                                        </div>
+                                        <div class="select-box">
+                                            <p><strong>Количество колец</strong></p>
+                                            <select class="form-control expand">
+                                                <option>1 штука</option>
+                                                <option>2 штуки</option>
+                                                <option>3 штуки</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="select-box">
-                                        <p><strong>Количество колец</strong></p>
-                                        <select class="form-control expand">
-                                            <option>1 штука</option>
-                                            <option>2 штуки</option>
-                                            <option>3 штуки</option>
-                                        </select>
-                                    </div>
-                                    <a class="button construct-btn" data-toggle="collapse" data-parent="#accordion"
-                                        href="#collapseThree"><span>Следующий шаг</span></a>
+                                    <a class="button btnTwo construct-btn" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapseThree"><span>Следующий шаг</span></a>
                                 </div>
                             </div>
                         </div>
@@ -240,8 +242,8 @@
                                         </label>
                                     </div>
                                     <img class="bottom-septic-img" src="img/constructor/bottom-septic.png" alt="bs">
-                                    <a class="button construct-btn" data-toggle="collapse" data-parent="#accordion"
-                                        href="#collapseFour" aria-expanded="false"
+                                    <a class="button btnThree construct-btn" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapseFour" aria-expanded="false"
                                         aria-controls="collapseFour"><span>Следующий шаг</span></a>
                                 </div>
                             </div>
@@ -260,8 +262,9 @@
                                 aria-labelledby="headingFour">
                                 <div class="panel-body">
                                     <p>Введите расстояние до дома</p>
-                                    <input type="text">
-                                    <button class="button construct-btn call-btn">Получить расчет и скидку</button>
+                                    <input type="text" class="distance">
+                                    <button class="button btnFour construct-btn">Получить расчет и
+                                        скидку</button>
                                 </div>
                             </div>
                         </div>
@@ -538,6 +541,30 @@
         </div>
     </div>
 
+    <!-- popup discount calculation -->
+
+    <div class="popup-discount-calculation popup">
+        <div class="popup-dialog">
+            <div class="popup-content">
+                <!-- <div class="popup-form"> -->
+                <form class="capture-form text-center">
+                    <span class="circle"><button class="popup-close">&times;</button></span>
+                    <label for="name_14">Как к вам обращаться</label>
+                    <input type="text" id="name_14" name="user_name" placeholder="Ваше имя" required>
+                    <label for="phone_14">Ваш телефон для получения скидки</label>
+                    <input class="phone-user" type="text" id="phone_14" name="user_phone" placeholder="+7(___)___-__-__"
+                        required>
+                    <button class="button capture-form-btn discount-calc-btn" name="submit" type="submit">Заказать со
+                        скидкой</button>
+                    <p class="small">Вы получите расчет стоимости с учетом выбора <br>подходящего объема септика. типа
+                        грунта, <br> расположения объектов на участке, уровня грунтовых <br> вод, типа фундамента дома и
+                        еще
+                        7 параметров</p>
+                </form>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
     <div class="popup-check popup">
         <div class="popup-dialog">
             <div class="popup-content">

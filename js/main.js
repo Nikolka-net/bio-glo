@@ -2,7 +2,7 @@
 
 //Мodal window
 
-//Popup-call, popup-discount, popup-check, popup-consultation
+//Popup-call, popup-discount, popup-check, popup-consultation, popup-discount-calculation
 
 const btnAlertModal = (btn, popupWindow, popupWindowContent) => {//вызов модального окна
 
@@ -44,6 +44,7 @@ const btnAlertModal = (btn, popupWindow, popupWindowContent) => {//вызов м
   });
 };
 
+//Popup-call
 const popupCall = () => {
   const popupCall = document.querySelector('.popup-call'),
     callBtn = document.querySelectorAll('.call-btn'),
@@ -53,6 +54,7 @@ const popupCall = () => {
 };
 popupCall();
 
+//Popup-discount
 const popupDiscount = () => {
   const btnDiscount = document.querySelectorAll('.discount-btn'),
     popupDiscount = document.querySelector('.popup-discount'),
@@ -62,7 +64,17 @@ const popupDiscount = () => {
 };
 popupDiscount();
 
+//Popup-discount-calculation
+const popupDiscountCalc = () => {
+  const btnDiscountCalc = document.querySelectorAll('.btnFour'),
+    popupDiscountCalc = document.querySelector('.popup-discount-calculation'),
+    popupContentDiscountCalc = document.querySelectorAll('.popup-content')[2];
 
+  btnAlertModal(btnDiscountCalc, popupDiscountCalc, popupContentDiscountCalc);
+};
+popupDiscountCalc();
+
+//Popup-check
 const popupCheck = () => {
   const btnCheck = document.querySelectorAll('.gauging-button'),
     popupCheck = document.querySelector('.popup-check'),
@@ -73,6 +85,7 @@ const popupCheck = () => {
 };
 popupCheck();
 
+//Popup-consultation
 const popupConsultation = () => {
   const btnConsultation = document.querySelectorAll('.consultation-btn'),
     popupConsultation = document.querySelector('.popup-consultation'),
@@ -82,6 +95,157 @@ const popupConsultation = () => {
 };
 popupConsultation();
 
+//AccordionTwo
+
+const accordionTwo = () => {
+
+  const btnAccordionTwo = document.querySelectorAll(`a[data-parent="#accordion-two"]`),
+    collapseOne = document.querySelector('.collapseOne'),
+    collapseTwo = document.querySelector('.collapseTwo'),
+    collapseThree = document.querySelector('.collapseThree');
+
+  btnAccordionTwo.forEach((elem) => {
+    elem.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (elem.closest('#headingOne-two')) {
+
+        if (collapseOne.style.display === 'none') {
+          collapseOne.style.display = 'block';
+          collapseTwo.style.display = 'none';
+          collapseThree.style.display = 'none';
+
+        } else {
+          collapseOne.style.display = 'block';
+        }
+      }
+
+      if (elem.closest('#headingTwo-two')) {
+
+        if (collapseTwo.style.display === 'block') {
+          collapseTwo.style.display = 'block';
+        } else {
+          collapseOne.style.display = 'none';
+          collapseTwo.style.display = 'block';
+          collapseThree.style.display = 'none';
+        }
+      }
+
+      if (elem.closest('#headingThree-two')) {
+
+        if (collapseThree.style.display === 'block') {
+          collapseThree.style.display = 'block';
+        } else {
+          collapseOne.style.display = 'none';
+          collapseTwo.style.display = 'none';
+          collapseThree.style.display = 'block';
+        }
+      }
+    });
+
+  });
+
+};
+accordionTwo();
+
+//More blocks, sentence
+
+const moreBlocks = () => {
+  const shadowBlocks = document.querySelectorAll(`.col-xs-12.col-sm-6.col-md-4`),
+    btnAddSentence = document.querySelector('.add-sentence-btn');
+
+
+  btnAddSentence.addEventListener('click', (event) => {
+    event.preventDefault();
+    shadowBlocks.forEach((elem) => {
+      if (elem.matches('.visible-sm-block') || elem.matches('.hidden')) {
+        elem.classList.remove('visible-sm-block', 'hidden');
+        btnAddSentence.style.cssText = `transform: scale(0)`;
+      }
+
+    });
+
+  });
+
+};
+
+moreBlocks();
+
+//Accordion
+
+const accordion = () => {
+  const btnAccordion = document.querySelectorAll(`a[data-parent="#accordion"]`),
+    collapseOneId = document.getElementById('collapseOne'),
+    collapseTwoId = document.getElementById('collapseTwo'),
+    collapseThreeId = document.getElementById('collapseThree');
+  let collapseFourId = document.getElementById('collapseFour');
+
+  btnAccordion.forEach((elem) => {
+    elem.addEventListener('click', (event) => {
+      event.preventDefault();
+      //One
+      if (elem.closest('#headingOne')) {
+        if (collapseOneId.style.display === 'none') {
+          collapseOneId.style.display = 'block';
+          collapseTwoId.style.display = 'none';
+          collapseThreeId.style.display = 'none';
+          collapseFourId.style.display = 'none';
+
+        } else {
+          collapseOneId.style.display = 'block';
+        }
+      }
+      //Two
+      if (elem.closest('#headingTwo') || elem.matches('.btnOne')) {
+
+        if (collapseTwoId.style.display === 'block') {
+          collapseTwoId.style.display = 'block';
+
+        } else {
+          collapseOneId.style.display = 'none';
+          collapseTwoId.style.display = 'block';
+          collapseThreeId.style.display = 'none';
+          collapseFourId.style.display = 'none';
+        }
+      }
+      //Three
+      if (elem.closest('#headingThree') || elem.matches('.btnTwo')) {
+
+        if (collapseThreeId.style.display === 'block') {
+          collapseThreeId.style.display = 'block';
+
+        } else {
+          collapseOneId.style.display = 'none';
+          collapseTwoId.style.display = 'none';
+          collapseThreeId.style.display = 'block';
+          collapseFourId.style.display = 'none';
+        }
+      }
+      //Four
+      if (elem.closest('#headingFour') || elem.matches('.btnThree')) {
+
+        if (collapseFourId.style.display === 'block') {
+          collapseFourId.style.display = 'block';
+
+        } else {
+          collapseOneId.style.display = 'none';
+          collapseTwoId.style.display = 'none';
+          collapseThreeId.style.display = 'none';
+          collapseFourId.style.display = 'block';
+        }
+      }
+
+    });
+
+  });
+  /*  btnFour.addEventListener('click', () => {//закрываем последний блок при нажатии на кнопку "получить расчёт"
+     inputDistance.value = '';
+     if (collapseFourId.style.display === 'block') {
+       collapseFourId.style.display = 'none';
+     }
+   }); */
+
+};
+accordion();
 
 //Send form
 
@@ -94,9 +258,10 @@ const sendForm = () => {
     captureForm = document.querySelectorAll('.capture-form')[0],
     callForm = document.querySelectorAll('.capture-form')[1],
     discountForm = document.querySelectorAll('.capture-form')[2],
-    checkForm = document.querySelectorAll('.capture-form')[3],
+    discountCalcForm = document.querySelectorAll('.capture-form')[3],
+    checkForm = document.querySelectorAll('.capture-form')[4],
     directorForm = document.querySelector('.director-form'),
-    consultationForm = document.querySelectorAll('.capture-form')[4],
+    consultationForm = document.querySelectorAll('.capture-form')[5],
     input = document.querySelectorAll('input');
 
   const inputNameTel = () => {//ввод. в инпут только цифры и кириллица
@@ -124,10 +289,11 @@ const sendForm = () => {
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = `font-size: 2rem; color: ##90c406`;
 
-  const getForm = (event, form, form2) => {
+  const getForm = (event, form, form2, obj) => {
     event.preventDefault();//чтобы страница не перезагружалась по умолчанию
     form.appendChild(statusMessage);
     statusMessage.textContent = loadMessage;//идёт загрузка
+    let body = {};//объект, ко-й отправл. на сервер в формате json
 
     let formData = new FormData(form);//получ. данные нашей формы c атрибутом name в объект
     if (form2) {
@@ -137,8 +303,11 @@ const sendForm = () => {
         }
       }
     }
-
-    let body = {};//объект, ко-й отправл. на сервер в формате json
+    if (obj) {
+      for (let key in obj) {//эл. в др. объект
+        body[key] = obj[key];
+      }
+    }
 
     formData.forEach((val, key) => {
       body[key] = val;
@@ -179,7 +348,7 @@ const sendForm = () => {
     }, 3000);
   };
 
-  function valid(event, form, form2) {
+  function valid(event, form, form2, obj) {
     const elementsForm = [];//пустой массив для инпутов
     const error = new Set();//массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
 
@@ -207,7 +376,7 @@ const sendForm = () => {
 
     });
     if (!error.size) {//если size не содержит ошибки (в Set);size коли-во эл. в массиве Set
-      getForm(event, form, form2);
+      getForm(event, form, form2, obj);
       inputReset(form, form2);
     }
   }
@@ -250,88 +419,300 @@ const sendForm = () => {
 
   };
 
+  //Calculator online
+
+  const calculatorOnline = function calculatorOnlineFunc() {
+    const myOnOffSwitchOne = document.getElementById('myonoffswitch'),
+      myOnOffSwitchTwo = document.getElementById('myonoffswitch-two'),
+      sumpTwo = document.querySelector('.sumpTwo'),
+      formControl = document.querySelectorAll('.form-control'),
+      formDiameterOne = document.querySelectorAll('.form-control')[0],
+      formNumberOne = document.querySelectorAll('.form-control')[1],
+      formDiameterTwo = document.querySelectorAll('.form-control')[2],
+      formNumberTwo = document.querySelectorAll('.form-control')[3];
+    let inputDistance = document.querySelector('.distance');
+    let calcResult = document.getElementById('calc-result');
+    let btnFour = document.querySelector('.btnFour');
+    let collapseFourId = document.getElementById('collapseFour');
+
+
+    let obj = {
+      priseOne: 10000,
+      priseTwo: 15000,
+      wellTwo: 0,
+      wellOne: 0
+    };
+    let obj2 = {
+      result: 0,
+      distance: 0,
+      diameter1: '1.4 метра',
+      diameter2: '1.4 метра',
+      number1: '1 штука',
+      number2: '1 штука',
+    };
+
+    //check and option
+    myOnOffSwitchOne.addEventListener('change', () => {
+      if (myOnOffSwitchOne.checked) {
+        sumpTwo.style.display = 'none';
+        calcResult.value = obj.priseOne;
+
+        //1 колодец
+
+        formControl.forEach((elem) => {
+          elem.addEventListener('change', () => {
+
+            if (formDiameterOne.value === '1.4 метра') {
+
+              if (formNumberOne.value === '1 штука') {
+                calcResult.value = 10000;
+              }
+              if (formNumberOne.value === '2 штуки') {
+                calcResult.value = ((10000 * 30) / 100) + 10000;
+              } else if (formNumberOne.value === '3 штуки') {
+                calcResult.value = ((10000 * 50) / 100) + 10000;
+              }
+            }
+
+            if (formDiameterOne.value === '2 метра') {
+              calcResult.value = ((10000 * 20) / 100) + 10000;
+
+              if (formNumberOne.value === '1 штука') {
+                calcResult.value = 12000;
+              }
+              if (formNumberOne.value === '2 штуки') {
+                calcResult.value = ((10000 * 30) / 100) + 12000;
+              } else if (formNumberOne.value === '3 штуки') {
+                calcResult.value = ((10000 * 50) / 100) + 12000;
+              }
+            }
+            //
+            obj.wellOne = calcResult.value;
+            calcResult.value = +calcResult.value + 1000;//отображаем в примерной стоимости
+
+          });
+        });
+
+        //2 колодца
+
+      } else if (!myOnOffSwitchOne.checked) {
+        sumpTwo.style.display = 'block';
+        calcResult.value = obj.priseTwo;
+
+        formControl.forEach((elem) => {
+          elem.addEventListener('change', () => {
+            //1 proviso
+            if (sumpTwo.style.display === 'block') {
+              if (formDiameterOne.value === '1.4 метра' && formDiameterTwo.value === '1.4 метра') {
+                //1шт
+                if (formNumberOne.value === '1 штука') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = 15000;//15000
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = (15000 * 30) / 100 + 15000;//19500
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = (15000 * 50) / 100 + 15000;//22500
+                  }
+                }
+                //2шт
+                if (formNumberOne.value === '2 штуки') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = (15000 * 30) / 100 + 15000;//19500
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = ((15000 * 30) / 100) * 2 + 15000;//24000
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 15000;//27000
+                  }
+                }
+                //3шт
+                if (formNumberOne.value === '3 штуки') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = (15000 * 50) / 100 + 15000;//22500
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 15000;//27000
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = ((15000 * 50) / 100) * 2 + 15000;//30000
+                  }
+                }
+              }
+              //2 proviso
+              if (formDiameterOne.value === '2 метра' && formDiameterTwo.value === '1.4 метра' ||
+                formDiameterOne.value === '1.4 метра' && formDiameterTwo.value === '2 метра') {
+                calcResult.value = ((15000 * 20) / 100) + 15000;//18000
+                //1шт
+                if (formNumberOne.value === '1 штука') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = 18000;//18000
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = (15000 * 30) / 100 + 18000;//22500
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = (15000 * 50) / 100 + 18000;//25500
+                  }
+                }
+                //2шт
+                if (formNumberOne.value === '2 штуки') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = (15000 * 30) / 100 + 18000;//22500
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = ((15000 * 30) / 100) * 2 + 18000;//27000
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 18000;//30000
+                  }
+                }
+                //3шт
+                if (formNumberOne.value === '3 штуки') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = (15000 * 50) / 100 + 18000;//25500
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 18000;//30000
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = ((15000 * 50) / 100) * 2 + 18000;//33000
+                  }
+                }
+              }
+              //3 proviso
+              if (formDiameterOne.value === '2 метра' && formDiameterTwo.value === '2 метра') {
+                calcResult.value = ((15000 * 20) / 100) * 2 + 15000;//21000
+                //1шт
+                if (formNumberOne.value === '1 штука') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = 21000;//21000
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = (15000 * 30) / 100 + 21000;//25500
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = (15000 * 50) / 100 + 21000;//28500
+                  }
+                }
+                //2шт
+                if (formNumberOne.value === '2 штуки') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = (15000 * 30) / 100 + 21000;//25500
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = ((15000 * 30) / 100) * 2 + 21000;//30000
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 21000;//33000
+                  }
+                }
+                //3шт
+                if (formNumberOne.value === '3 штуки') {
+                  if (formNumberTwo.value === '1 штука') {
+                    calcResult.value = (15000 * 50) / 100 + 21000;//28500
+                  } else if (formNumberTwo.value === '2 штуки') {
+                    calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 21000;//33000
+                  } else if (formNumberTwo.value === '3 штуки') {
+                    calcResult.value = ((15000 * 50) / 100) * 2 + 21000;//36000
+                  }
+                }
+              }
+              //
+              obj.wellTwo = calcResult.value;
+              calcResult.value = +calcResult.value + 2000;
+            }
+          });
+        });
+      }
+    });
+
+    myOnOffSwitchTwo.addEventListener('change', () => {
+      if (myOnOffSwitchTwo.checked) {
+        if (sumpTwo.style.display === 'none') {
+          if (+obj.wellOne > 0) {
+            calcResult.value = +obj.wellOne + 1000;
+          } else if (+obj.wellOne === 0) {
+            calcResult.value = +obj.priseOne + 1000;
+          }
+        }
+        if (sumpTwo.style.display === 'block') {
+          if (+obj.wellTwo > 0) {
+            calcResult.value = +obj.wellTwo + 2000;
+          } else if (+obj.wellTwo === 0) {
+            calcResult.value = +obj.priseTwo + 2000;
+          }
+        }
+      } else if (!myOnOffSwitchTwo.checked) {
+        if (sumpTwo.style.display === 'none') {
+          if (+obj.wellOne > 0) {
+            calcResult.value = +obj.wellOne;
+          } else {
+            calcResult.value = +obj.priseOne;
+          }
+        }
+        if (sumpTwo.style.display === 'block') {
+          if (+obj.wellTwo > 0) {
+            calcResult.value = +obj.wellTwo;
+          } else {
+            calcResult.value = +obj.priseTwo;
+          }
+        }
+      }
+    });
+
+    //Dimeter and number 
+
+    formControl.forEach((elem) => {
+      elem.addEventListener('change', () => {
+        if (sumpTwo.style.display === 'block') {
+          if (elem === formDiameterOne) {
+            obj2.diameter1 = elem.value;
+          } else if (elem === formNumberOne) {
+            obj2.number1 = elem.value;
+          } else if (elem === formDiameterTwo) {
+            obj2.diameter2 = elem.value;
+          } else if (elem === formNumberTwo) {
+            obj2.number2 = elem.value;
+          }
+        } if (sumpTwo.style.display === 'none') {
+          if (elem === formDiameterOne) {
+            obj2.diameter1 = elem.value;
+          } else if (elem === formNumberOne) {
+            obj2.number1 = elem.value;
+          }
+
+          const resetObj2 = () => {//очистка объекта от ненужных значений
+            obj2.diameter2 = '';
+            obj2.number2 = '';
+          };
+          resetObj2();
+        }
+      });
+    });
+    //Input distance
+    inputDistance.addEventListener('input', () => {
+      obj2.result = +calcResult.value;
+      obj2.distance = +inputDistance.value;
+    });
+
+    btnFour.addEventListener('click', () => {//закрываем последний блок при нажатии на кнопку "получить расчёт"
+      reset();
+      if (collapseFourId.style.display === 'block') {
+        collapseFourId.style.display = 'none';
+      }
+    });
+
+    const reset = () => {
+      calcResult.value = '';
+      inputDistance.value = '';
+    };
+
+    const resetObj = (obj) => {//очистка объекта
+      obj2 = {
+        result: 0,
+        distance: 0,
+        diameter1: '1.4 метра',
+        diameter2: '1.4 метра',
+        number1: '1 штука',
+        number2: '1 штука',
+      };
+    };
+
+    discountCalcForm.addEventListener('submit', (event) => {//отправка формы
+      valid(event, discountCalcForm, null, obj2);
+      resetObj(obj2);
+    });
+  };
+
+  calculatorOnline();
 
 };
 
 sendForm();
-
-//AccordionTwo
-
-const accordionTwo = () => {
-
-  const btnAccordionTwo = document.querySelectorAll(`a[data-parent="#accordion-two"]`),
-    collapseOne = document.querySelector('.collapseOne'),
-    collapseTwo = document.querySelector('.collapseTwo'),
-    collapseThree = document.querySelector('.collapseThree');
-
-  btnAccordionTwo.forEach((elem) => {
-    elem.addEventListener('click', (event) => {
-      event.preventDefault();
-      if (elem.closest('#headingOne-two')) {
-
-        if (collapseOne.style.display === 'none') {
-          collapseOne.style.display = 'block';
-          collapseTwo.style.display = 'none';
-          collapseThree.style.display = 'none';
-
-        } else {
-          collapseOne.style.display = 'block';
-          collapseTwo.style.display = 'none';
-          collapseThree.style.display = 'none';
-        }
-      }
-
-      if (elem.closest('#headingTwo-two')) {
-
-        if (collapseTwo.style.display === 'block') {
-          collapseOne.style.display = 'none';
-          collapseTwo.style.display = 'block';
-          collapseThree.style.display = 'none';
-        } else {
-          collapseOne.style.display = 'none';
-          collapseTwo.style.display = 'block';
-          collapseThree.style.display = 'none';
-        }
-      }
-
-      if (elem.closest('#headingThree-two')) {
-
-        if (collapseThree.style.display === 'block') {
-          collapseOne.style.display = 'none';
-          collapseTwo.style.display = 'none';
-          collapseThree.style.display = 'block';
-        } else {
-          collapseOne.style.display = 'none';
-          collapseTwo.style.display = 'none';
-          collapseThree.style.display = 'block';
-        }
-      }
-    });
-
-  });
-
-};
-accordionTwo();
-
-//More blocks, sentence
-
-const moreBlocks = () => {
-  const shadowBlocks = document.querySelectorAll(`.col-xs-12.col-sm-6.col-md-4`),
-    btnAddSentence = document.querySelector('.add-sentence-btn');
-
-
-  btnAddSentence.addEventListener('click', (event) => {
-    event.preventDefault();
-    shadowBlocks.forEach((elem) => {
-      if (elem.matches('.visible-sm-block') || elem.matches('.hidden')) {
-        elem.classList.remove('visible-sm-block', 'hidden');
-        btnAddSentence.style.cssText = `transform: scale(0)`;
-      }
-
-    });
-
-  });
-
-};
-
-moreBlocks();
