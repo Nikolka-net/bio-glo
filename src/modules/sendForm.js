@@ -13,169 +13,7 @@ const sendForm = () => {
     consultationForm = document.querySelectorAll('.capture-form')[4],
     input = document.querySelectorAll('input');
 
-  const inputNameTel = () => {//ввод. в инпут только цифры и кириллица
-
-    input.forEach((elem) => {
-      elem.addEventListener('input', () => {
-        if (elem.name === 'user_name') {
-          elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
-        }
-
-        if (elem.name === 'user_phone') {
-          elem.value = elem.value.replace(/\D/, '');
-        }
-
-        if (elem.name === 'user_quest') {
-          elem.value = elem.value.replace(/[^a-zа-яё\s\d?!\.,:;]/ig, '');
-        }
-        if (elem.matches('.distance')) {
-          elem.value = elem.value.replace(/\D/, '');
-        }
-
-      });
-
-    });
-  };
-  inputNameTel();
-
-  const statusMessage = document.createElement('div');
-  statusMessage.style.cssText = `font-size: 2rem; color: ##90c406`;
-
-  const getForm = (event, form, form2, obj) => {
-    event.preventDefault();//чтобы страница не перезагружалась по умолчанию
-    form.appendChild(statusMessage);
-    statusMessage.textContent = loadMessage;//идёт загрузка
-    let body = {};//объект, ко-й отправл. на сервер в формате json
-
-    let formData = new FormData(form);//получ. данные нашей формы c атрибутом name в объект
-    if (form2) {
-      for (const elem of form2.elements) {//вытаскиваем из формы инпуты
-        if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
-          formData.append(elem.name, elem.value);//добавляем ключ и значение в formData
-        }
-      }
-    }
-    if (obj) {
-      for (let key in obj) {//эл. в др. объект
-        body[key] = obj[key];
-      }
-    }
-    formData.forEach((val, key) => {
-      body[key] = val;
-    });
-
-    postData(body)
-
-      .then((response) => {//данные, ко-е мы получаем
-        if (response.status !== 200) {
-          throw new Error('status network not 200');//обрабатываем как ошибку через конструктор
-        }
-        statusMessage.textContent = successMessage;
-      })
-      .catch((error) => {
-        statusMessage.textContent = errorMessage;
-        console.error(error);
-      });
-    setTimeout(() => {//очистка сообщений
-      form.removeChild(statusMessage);
-    }, 3000);
-
-  };
-
-  const inputReset = (form, form2) => {
-
-    for (const elem of form.elements) {//очистка инпутов
-      if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
-        elem.value = '';
-        elem.removeAttribute('required');
-      }
-    }
-    if (form2) {
-
-      for (const elem of form2.elements) {//очистка инпутов
-        if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
-          elem.value = '';
-          elem.removeAttribute('required');
-        }
-      }
-    }
-
-  };
-
-
-
-  function valid(event, form, form2, obj) {
-    const elementsForm = [];//пустой массив для инпутов
-    const error = new Set();//массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
-
-    for (const elem of form.elements) {//вытаскиваем из формы инпуты
-      if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
-        elementsForm.push(elem);//пушим в массив только наши инпуты
-      }
-    }
-
-    elementsForm.forEach(elem => {
-      const patternPhone = /^\+?[78]([-()]*\d){10}$/;
-      const patternText = (/^[а-яё\s]+$/i);
-      //const patternEmail = /^[\w-]+@\w+\.\w{1,}\D$/;//после точки больше 1 символа, не цифры
-
-
-      if (elem.value.trim() === '' || elem.name === 'user_phone' && !patternPhone.test(elem.value) ||
-        elem.name === 'user_name' && !patternText.test(elem.value)) {//если не проходит валидацию
-        event.preventDefault();
-        elem.style.border = 'solid red';
-        error.add(elem);//добавл. инпуты с ошибками в Set
-      } else {
-        error.delete(elem);//удал. инпуты из Seta
-        elem.style.border = '';
-      }
-
-    });
-    if (!error.size) {//если size не содержит ошибки (в Set);size коли-во эл. в массиве Set
-      getForm(event, form, form2, obj);
-      inputReset(form, form2);
-    }
-  }
-
-  mainForm.addEventListener('submit', (event) => {
-    valid(event, mainForm);
-  });
-
-  captureForm.addEventListener('submit', (event) => {
-    valid(event, captureForm);
-  });
-
-  callForm.addEventListener('submit', (event) => {
-    valid(event, callForm);
-  });
-
-  discountForm.addEventListener('submit', (event) => {
-    valid(event, discountForm);
-  });
-
-  checkForm.addEventListener('submit', (event) => {
-    valid(event, checkForm);
-  });
-
-  consultationForm.addEventListener('submit', (event) => {
-    valid(event, consultationForm, directorForm);
-  });
-
-
-  const postData = (body) => {//ф. отправки запроса
-    return fetch('./server.php', {//отправка запроса на сервер с по-ю промисов
-      method: 'POST',//отправляем и получаем
-      headers: {//заголовки
-        'Content-Type': 'application/json'//сообщаем серверу, что передаём json
-      },
-      body: JSON.stringify(body),//преобр. данные (~body) в json(строка) и передаём
-      credentials: 'include',
-      cache: 'default'
-    });
-
-  };
-
-  //Calculator online
+  //calculator
 
   const calculatorOnline = () => {
     const myOnOffSwitchOne = document.getElementById('myonoffswitch'),
@@ -206,6 +44,179 @@ const sendForm = () => {
       number1: '1 штука',
       number2: '1 штука',
     };
+
+
+
+    const inputNameTel = () => {//ввод. в инпут только цифры и кириллица
+
+      input.forEach((elem) => {
+        elem.addEventListener('input', () => {
+          if (elem.name === 'user_name') {
+            elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
+          }
+
+          if (elem.name === 'user_phone') {
+            elem.value = elem.value.replace(/\D/, '');
+          }
+
+          if (elem.name === 'user_quest') {
+            elem.value = elem.value.replace(/[^a-zа-яё\s\d?!\.,:;]/ig, '');
+          }
+          if (elem.matches('.distance')) {
+            elem.value = elem.value.replace(/\D/, '');
+          }
+
+        });
+
+      });
+    };
+    inputNameTel();
+
+    const statusMessage = document.createElement('div');
+    statusMessage.style.cssText = `font-size: 2rem; color: ##90c406`;
+
+    const getForm = (event, form, form2, obj) => {
+      event.preventDefault();//чтобы страница не перезагружалась по умолчанию
+      form.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;//идёт загрузка
+      let body = {};//объект, ко-й отправл. на сервер в формате json
+
+      let formData = new FormData(form);//получ. данные нашей формы c атрибутом name в объект
+      if (form2) {
+        for (const elem of form2.elements) {//вытаскиваем из формы инпуты
+          if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+            formData.append(elem.name, elem.value);//добавляем ключ и значение в formData
+          }
+        }
+      }
+      if (obj) {
+        for (let key in obj) {//эл. в др. объект
+          body[key] = obj[key];
+        }
+      }
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+
+      postData(body)
+
+        .then((response) => {//данные, ко-е мы получаем
+          if (response.status !== 200) {
+            throw new Error('status network not 200');//обрабатываем как ошибку через конструктор
+          }
+          statusMessage.textContent = successMessage;
+        })
+        .catch((error) => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+        });
+      setTimeout(() => {//очистка сообщений
+        form.removeChild(statusMessage);
+      }, 3000);
+
+    };
+
+    const inputReset = (form, form2, obj) => {
+
+      for (const elem of form.elements) {//очистка инпутов
+        if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+          elem.value = '';
+          elem.removeAttribute('required');
+        }
+      }
+      if (form2) {
+
+        for (const elem of form2.elements) {//очистка инпутов
+          if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+            elem.value = '';
+            elem.removeAttribute('required');
+          }
+        }
+      }
+      if (obj) {//очистка при наличии объекта
+        resetObj();
+      }
+    };
+
+
+
+    function valid(event, form, form2, obj) {
+      const elementsForm = [];//пустой массив для инпутов
+      const error = new Set();//массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
+
+      for (const elem of form.elements) {//вытаскиваем из формы инпуты
+        if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+          elementsForm.push(elem);//пушим в массив только наши инпуты
+        }
+      }
+
+      elementsForm.forEach(elem => {
+        const patternPhone = /^\+?[78]([-()]*\d){10}$/;
+        const patternText = (/^[а-яё\s]+$/i);
+        //const patternEmail = /^[\w-]+@\w+\.\w{1,}\D$/;//после точки больше 1 символа, не цифры
+
+
+        if (elem.value.trim() === '' || elem.name === 'user_phone' && !patternPhone.test(elem.value) ||
+          elem.name === 'user_name' && !patternText.test(elem.value)) {//если не проходит валидацию
+          event.preventDefault();
+          elem.style.border = 'solid red';
+          error.add(elem);//добавл. инпуты с ошибками в Set
+        } else {
+          error.delete(elem);//удал. инпуты из Seta
+          elem.style.border = '';
+        }
+
+      });
+      if (!error.size) {//если size не содержит ошибки (в Set);size коли-во эл. в массиве Set
+        getForm(event, form, form2, obj);
+        inputReset(form, form2, obj);
+      }
+    }
+
+    mainForm.addEventListener('submit', (event) => {
+      valid(event, mainForm);
+    });
+
+    captureForm.addEventListener('submit', (event) => {
+      valid(event, captureForm);
+    });
+
+    callForm.addEventListener('submit', (event) => {
+      valid(event, callForm);
+    });
+
+    discountForm.addEventListener('submit', (event) => {
+      valid(event, discountForm);
+    });
+
+    checkForm.addEventListener('submit', (event) => {
+      valid(event, checkForm);
+    });
+
+    consultationForm.addEventListener('submit', (event) => {
+      valid(event, consultationForm, directorForm);
+    });
+
+    discountCalcForm.addEventListener('submit', (event) => {//отправка формы
+      valid(event, discountCalcForm, null, obj2);
+      //resetObj();
+    });
+
+    const postData = (body) => {//ф. отправки запроса
+      return fetch('./server.php', {//отправка запроса на сервер с по-ю промисов
+        method: 'POST',//отправляем и получаем
+        headers: {//заголовки
+          'Content-Type': 'application/json'//сообщаем серверу, что передаём json
+        },
+        body: JSON.stringify(body),//преобр. данные (~body) в json(строка) и передаём
+        credentials: 'include',
+        cache: 'default'
+      });
+
+    };
+
+    //Calculator online
+
 
     //check and option
     myOnOffSwitchOne.addEventListener('change', () => {
@@ -405,7 +416,7 @@ const sendForm = () => {
     });
 
     //Dimeter and number 
-    const resetObj2 = () => {//очистка объекта от ненужных значений
+    const deletElemObj2 = () => {//очистка объекта от ненужных значений
       obj2.diameter2 = '';
       obj2.number2 = '';
     };
@@ -428,7 +439,7 @@ const sendForm = () => {
           } else if (elem === formNumberOne) {
             obj2.number1 = elem.value;
           }
-          resetObj2();//очистка значений при 1 колодце
+          deletElemObj2();//очистка значений при 1 колодце
         }
       });
     });
@@ -440,21 +451,19 @@ const sendForm = () => {
     });
 
     btnFour.addEventListener('click', () => {//закрываем последний блок при нажатии на кнопку "получить расчёт"
-      reset();
       if (sumpTwo.style.display === 'none') {//проверка при выборе 1 колодца
-        resetObj2();//очистка значений
+        deletElemObj2();//очистка значений
       }
       if (collapseFourId.style.display === 'block') {
         collapseFourId.style.display = 'none';
       }
     });
 
-    const reset = () => {
+    const resetObj = () => {//очистка объекта
+
       calcResult.value = '';
       inputDistance.value = '';
-    };
 
-    const resetObj = () => {//очистка объекта
       obj = {
         priseOne: 10000,
         priseTwo: 15000,
@@ -475,10 +484,6 @@ const sendForm = () => {
       formNumberTwo.value = '1 штука';
     };
 
-    discountCalcForm.addEventListener('submit', (event) => {//отправка формы
-      valid(event, discountCalcForm, null, obj2);
-      resetObj();
-    });
   };
 
   calculatorOnline();
