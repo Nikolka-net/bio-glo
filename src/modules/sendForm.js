@@ -60,7 +60,6 @@ const sendForm = () => {
         body[key] = obj[key];
       }
     }
-
     formData.forEach((val, key) => {
       body[key] = val;
     });
@@ -77,6 +76,10 @@ const sendForm = () => {
         statusMessage.textContent = errorMessage;
         console.error(error);
       });
+    setTimeout(() => {//очистка сообщений
+      form.removeChild(statusMessage);
+    }, 3000);
+
   };
 
   const inputReset = (form, form2) => {
@@ -84,6 +87,7 @@ const sendForm = () => {
     for (const elem of form.elements) {//очистка инпутов
       if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
         elem.value = '';
+        elem.removeAttribute('required');
       }
     }
     if (form2) {
@@ -91,14 +95,14 @@ const sendForm = () => {
       for (const elem of form2.elements) {//очистка инпутов
         if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
           elem.value = '';
+          elem.removeAttribute('required');
         }
       }
     }
 
-    setTimeout(() => {//очистка сообщений
-      form.removeChild(statusMessage);
-    }, 3000);
   };
+
+
 
   function valid(event, form, form2, obj) {
     const elementsForm = [];//пустой массив для инпутов
@@ -118,9 +122,9 @@ const sendForm = () => {
 
       if (elem.value.trim() === '' || elem.name === 'user_phone' && !patternPhone.test(elem.value) ||
         elem.name === 'user_name' && !patternText.test(elem.value)) {//если не проходит валидацию
+        event.preventDefault();
         elem.style.border = 'solid red';
         error.add(elem);//добавл. инпуты с ошибками в Set
-        event.preventDefault();
       } else {
         error.delete(elem);//удал. инпуты из Seta
         elem.style.border = '';
@@ -173,7 +177,7 @@ const sendForm = () => {
 
   //Calculator online
 
-  const calculatorOnline = function calculatorOnlineFunc() {
+  const calculatorOnline = () => {
     const myOnOffSwitchOne = document.getElementById('myonoffswitch'),
       myOnOffSwitchTwo = document.getElementById('myonoffswitch-two'),
       sumpTwo = document.querySelector('.sumpTwo'),

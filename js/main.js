@@ -4,12 +4,26 @@
 
 //Popup-call, popup-discount, popup-check, popup-consultation, popup-discount-calculation
 const modalWindow = () => {
-  const btnAlertModal = (btn, popupWindow, popupWindowContent) => {//вызов модального окна
+  const btnAlertModal = (btn, popupWindow, popupWindowContent, form) => {//вызов модального окна
 
     let count = 0;
     btn.forEach((elem) => {
       elem.addEventListener('click', (event) => {
         event.preventDefault();
+        //убираем border red
+        if (form) {
+          for (const elem of form.elements) {//вытаскиваем из формы инпуты
+            if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+              if (elem.style.border === 'solid red') {
+                elem.style.border = '';
+              }
+              //убираем required
+              if (elem.hasAttribute('required')) {
+                elem.removeAttribute('required');
+              }
+            }
+          }
+        }
         popupWindow.style.display = 'block';
         popupWindowContent.style.cssText = `border: 2px solid #90c406; box-shadow: 2px 4px 10px #222`;
         let popupInterval;
@@ -48,9 +62,10 @@ const modalWindow = () => {
   const popupCall = () => {
     const popupCall = document.querySelector('.popup-call'),
       callBtn = document.querySelectorAll('.call-btn'),
-      popupContentCall = document.querySelectorAll('.popup-content')[0];
+      popupContentCall = document.querySelectorAll('.popup-content')[0],
+      callForm = document.querySelectorAll('.capture-form')[1];
 
-    btnAlertModal(callBtn, popupCall, popupContentCall);
+    btnAlertModal(callBtn, popupCall, popupContentCall, callForm);
   };
   popupCall();
 
@@ -58,9 +73,10 @@ const modalWindow = () => {
   const popupDiscount = () => {
     const btnDiscount = document.querySelectorAll('.discount-btn'),
       popupDiscount = document.querySelector('.popup-discount'),
-      popupContentDiscount = document.querySelectorAll('.popup-content')[1];
+      popupContentDiscount = document.querySelectorAll('.popup-content')[1],
+      discountForm = document.querySelectorAll('.capture-form')[2];
 
-    btnAlertModal(btnDiscount, popupDiscount, popupContentDiscount);
+    btnAlertModal(btnDiscount, popupDiscount, popupContentDiscount, discountForm);
   };
   popupDiscount();
 
@@ -68,9 +84,10 @@ const modalWindow = () => {
   const popupDiscountCalc = () => {
     const btnDiscountCalc = document.querySelectorAll('.btnFour'),
       popupDiscountCalc = document.querySelector('.popup-discount-calculation'),
-      popupContentDiscountCalc = document.querySelectorAll('.popup-content')[4];
+      popupContentDiscountCalc = document.querySelectorAll('.popup-content')[4],
+      discountCalcForm = document.querySelectorAll('.capture-form')[5];
 
-    btnAlertModal(btnDiscountCalc, popupDiscountCalc, popupContentDiscountCalc);
+    btnAlertModal(btnDiscountCalc, popupDiscountCalc, popupContentDiscountCalc, discountCalcForm);
   };
   popupDiscountCalc();
 
@@ -78,10 +95,10 @@ const modalWindow = () => {
   const popupCheck = () => {
     const btnCheck = document.querySelectorAll('.gauging-button'),
       popupCheck = document.querySelector('.popup-check'),
-      popupContentCheck = document.querySelectorAll('.popup-content')[2];
+      popupContentCheck = document.querySelectorAll('.popup-content')[2],
+      checkForm = document.querySelectorAll('.capture-form')[3];
 
-
-    btnAlertModal(btnCheck, popupCheck, popupContentCheck);
+    btnAlertModal(btnCheck, popupCheck, popupContentCheck, checkForm);
   };
   popupCheck();
 
@@ -89,9 +106,11 @@ const modalWindow = () => {
   const popupConsultation = () => {
     const btnConsultation = document.querySelectorAll('.consultation-btn'),
       popupConsultation = document.querySelector('.popup-consultation'),
-      popupContentConsultation = document.querySelectorAll('.popup-content')[3];
+      popupContentConsultation = document.querySelectorAll('.popup-content')[3],
+      consultationForm = document.querySelectorAll('.capture-form')[4];
 
-    btnAlertModal(btnConsultation, popupConsultation, popupContentConsultation);
+
+    btnAlertModal(btnConsultation, popupConsultation, popupContentConsultation, consultationForm);
   };
   popupConsultation();
 
@@ -242,12 +261,6 @@ const accordion = () => {
     });
 
   });
-  /*  btnFour.addEventListener('click', () => {//закрываем последний блок при нажатии на кнопку "получить расчёт"
-     inputDistance.value = '';
-     if (collapseFourId.style.display === 'block') {
-       collapseFourId.style.display = 'none';
-     }
-   }); */
 
 };
 accordion();
@@ -316,7 +329,6 @@ const sendForm = () => {
         body[key] = obj[key];
       }
     }
-
     formData.forEach((val, key) => {
       body[key] = val;
     });
@@ -333,6 +345,10 @@ const sendForm = () => {
         statusMessage.textContent = errorMessage;
         console.error(error);
       });
+    setTimeout(() => {//очистка сообщений
+      form.removeChild(statusMessage);
+    }, 3000);
+
   };
 
   const inputReset = (form, form2) => {
@@ -340,6 +356,7 @@ const sendForm = () => {
     for (const elem of form.elements) {//очистка инпутов
       if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
         elem.value = '';
+        elem.removeAttribute('required');
       }
     }
     if (form2) {
@@ -347,14 +364,14 @@ const sendForm = () => {
       for (const elem of form2.elements) {//очистка инпутов
         if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
           elem.value = '';
+          elem.removeAttribute('required');
         }
       }
     }
 
-    setTimeout(() => {//очистка сообщений
-      form.removeChild(statusMessage);
-    }, 3000);
   };
+
+
 
   function valid(event, form, form2, obj) {
     const elementsForm = [];//пустой массив для инпутов
@@ -374,9 +391,9 @@ const sendForm = () => {
 
       if (elem.value.trim() === '' || elem.name === 'user_phone' && !patternPhone.test(elem.value) ||
         elem.name === 'user_name' && !patternText.test(elem.value)) {//если не проходит валидацию
+        event.preventDefault();
         elem.style.border = 'solid red';
         error.add(elem);//добавл. инпуты с ошибками в Set
-        event.preventDefault();
       } else {
         error.delete(elem);//удал. инпуты из Seta
         elem.style.border = '';
@@ -429,7 +446,7 @@ const sendForm = () => {
 
   //Calculator online
 
-  const calculatorOnline = function calculatorOnlineFunc() {
+  const calculatorOnline = () => {
     const myOnOffSwitchOne = document.getElementById('myonoffswitch'),
       myOnOffSwitchTwo = document.getElementById('myonoffswitch-two'),
       sumpTwo = document.querySelector('.sumpTwo'),
