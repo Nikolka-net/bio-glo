@@ -322,17 +322,21 @@ const sendForm = () => {
         elem.addEventListener('input', () => {
           if (elem.name === 'user_name') {
             elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
+            elem.setAttribute('maxlength', '25');
           }
 
           if (elem.name === 'user_phone') {
             elem.value = elem.value.replace(/\D/, '');
+            elem.setAttribute('maxlength', '12');//ограничение на кол-во символов
           }
 
-          if (elem.name === 'user_quest') {
+          if (elem.name === 'user_quest') {//'введите вопрос'
             elem.value = elem.value.replace(/[^a-zа-яё\s\d?!\.,:;]/ig, '');
+            elem.setAttribute('maxlength', '120');
           }
           if (elem.matches('.distance')) {
             elem.value = elem.value.replace(/\D/, '');
+            elem.setAttribute('maxlength', '10');
           }
 
         });
@@ -468,7 +472,6 @@ const sendForm = () => {
 
     discountCalcForm.addEventListener('submit', (event) => {//отправка формы
       valid(event, discountCalcForm, null, obj2);
-      //resetObj();
     });
 
     const postData = (body) => {//ф. отправки запроса
