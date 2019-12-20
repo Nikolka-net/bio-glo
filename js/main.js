@@ -220,8 +220,8 @@ const accordion = () => {
   const btnAccordion = document.querySelectorAll(`a[data-parent="#accordion"]`),
     collapseOneId = document.getElementById('collapseOne'),
     collapseTwoId = document.getElementById('collapseTwo'),
-    collapseThreeId = document.getElementById('collapseThree'),
-    collapseFourId = document.getElementById('collapseFour');
+    collapseThreeId = document.getElementById('collapseThree');
+  let collapseFourId = document.getElementById('collapseFour');
 
   const sailOpacityOne = (panelCollapse) => {//плавное появление
     let count = 40;
@@ -385,7 +385,7 @@ const sendForm = () => {
     inputNameTel();
 
     const statusMessage = document.createElement('div');
-    statusMessage.style.cssText = `font-size: 2rem; color: ##90c406`;
+    statusMessage.classList.add('statusmessage');
 
     const getForm = (event, form, form2, obj) => {
       event.preventDefault();//чтобы страница не перезагружалась по умолчанию
@@ -419,6 +419,7 @@ const sendForm = () => {
           statusMessage.textContent = successMessage;
         })
         .catch((error) => {
+          statusMessage.style.color = '#bd1717';//красный цвет сообщения
           statusMessage.textContent = errorMessage;
           console.error(error);
         });
