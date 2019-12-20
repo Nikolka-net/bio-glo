@@ -528,12 +528,12 @@ const sendForm = () => {
 
     //Calculator online
 
-
+    calcResult.value = +obj.priseOne + 1000;//значение по умолчанию
     //check and option
     myOnOffSwitchOne.addEventListener('change', () => {
       if (myOnOffSwitchOne.checked) {
         sumpTwo.style.display = 'none';
-        calcResult.value = obj.priseOne;
+        calcResult.value = +obj.priseOne + 1000;
 
         //1 колодец
 
@@ -576,7 +576,7 @@ const sendForm = () => {
 
       } else if (!myOnOffSwitchOne.checked) {
         sumpTwo.style.display = 'block';
-        calcResult.value = obj.priseTwo;
+        calcResult.value = +obj.priseTwo + 1000;
 
         formControl.forEach((elem) => {
           elem.addEventListener('change', () => {
