@@ -128,13 +128,31 @@ const accordionTwo = () => {
     collapseTwo = document.querySelector('.collapseTwo'),
     collapseThree = document.querySelector('.collapseThree');
 
+
+  const sailOpacityTwo = (panelCollapse) => {//плавное появление
+    let count = 30;
+    let panelInterval;
+    const panelOpacityTwo = function () {
+      panelInterval = requestAnimationFrame(panelOpacityTwo);
+      count++;
+      if (count <= 100) {//уменьшаем прозрачность
+        panelCollapse.style.opacity = count + '%';
+      } else {
+        cancelAnimationFrame(panelInterval);
+      }
+    };
+    panelOpacityTwo();
+  };
+
   btnAccordionTwo.forEach((elem) => {
     elem.addEventListener('click', (event) => {
       event.preventDefault();
+
       if (elem.closest('#headingOne-two')) {
 
         if (collapseOne.style.display === 'none') {
           collapseOne.style.display = 'block';
+          sailOpacityTwo(collapseOne);
           collapseTwo.style.display = 'none';
           collapseThree.style.display = 'none';
 
@@ -150,6 +168,7 @@ const accordionTwo = () => {
         } else {
           collapseOne.style.display = 'none';
           collapseTwo.style.display = 'block';
+          sailOpacityTwo(collapseTwo);
           collapseThree.style.display = 'none';
         }
       }
@@ -162,6 +181,7 @@ const accordionTwo = () => {
           collapseOne.style.display = 'none';
           collapseTwo.style.display = 'none';
           collapseThree.style.display = 'block';
+          sailOpacityTwo(collapseThree);
         }
       }
     });
@@ -200,8 +220,23 @@ const accordion = () => {
   const btnAccordion = document.querySelectorAll(`a[data-parent="#accordion"]`),
     collapseOneId = document.getElementById('collapseOne'),
     collapseTwoId = document.getElementById('collapseTwo'),
-    collapseThreeId = document.getElementById('collapseThree');
-  let collapseFourId = document.getElementById('collapseFour');
+    collapseThreeId = document.getElementById('collapseThree'),
+    collapseFourId = document.getElementById('collapseFour');
+
+  const sailOpacityOne = (panelCollapse) => {//плавное появление
+    let count = 40;
+    let panelInterval;
+    const panelOpacityOne = function () {
+      panelInterval = requestAnimationFrame(panelOpacityOne);
+      count++;
+      if (count <= 100) {//уменьшаем прозрачность
+        panelCollapse.style.opacity = count + '%';
+      } else {
+        cancelAnimationFrame(panelInterval);
+      }
+    };
+    panelOpacityOne();
+  };
 
   btnAccordion.forEach((elem) => {
     elem.addEventListener('click', (event) => {
@@ -210,6 +245,7 @@ const accordion = () => {
       if (elem.closest('#headingOne')) {
         if (collapseOneId.style.display === 'none') {
           collapseOneId.style.display = 'block';
+          sailOpacityOne(collapseOneId);
           collapseTwoId.style.display = 'none';
           collapseThreeId.style.display = 'none';
           collapseFourId.style.display = 'none';
@@ -227,6 +263,7 @@ const accordion = () => {
         } else {
           collapseOneId.style.display = 'none';
           collapseTwoId.style.display = 'block';
+          sailOpacityOne(collapseTwoId);
           collapseThreeId.style.display = 'none';
           collapseFourId.style.display = 'none';
         }
@@ -241,6 +278,7 @@ const accordion = () => {
           collapseOneId.style.display = 'none';
           collapseTwoId.style.display = 'none';
           collapseThreeId.style.display = 'block';
+          sailOpacityOne(collapseThreeId);
           collapseFourId.style.display = 'none';
         }
       }
@@ -255,6 +293,7 @@ const accordion = () => {
           collapseTwoId.style.display = 'none';
           collapseThreeId.style.display = 'none';
           collapseFourId.style.display = 'block';
+          sailOpacityOne(collapseFourId);
         }
       }
 
