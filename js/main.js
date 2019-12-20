@@ -60,8 +60,8 @@ const modalWindow = () => {
   };
   //Popup-call
   const popupCall = () => {
-    const popupCall = document.querySelector('.popup-call'),
-      callBtn = document.querySelectorAll('.call-btn'),
+    let popupCall = document.querySelector('.popup-call');
+    const callBtn = document.querySelectorAll('.call-btn'),
       popupContentCall = document.querySelectorAll('.popup-content')[0],
       callForm = document.querySelectorAll('.capture-form')[1];
 
@@ -71,8 +71,8 @@ const modalWindow = () => {
 
   //Popup-discount
   const popupDiscount = () => {
+    let popupDiscount = document.querySelector('.popup-discount');
     const btnDiscount = document.querySelectorAll('.discount-btn'),
-      popupDiscount = document.querySelector('.popup-discount'),
       popupContentDiscount = document.querySelectorAll('.popup-content')[1],
       discountForm = document.querySelectorAll('.capture-form')[2];
 
@@ -82,8 +82,8 @@ const modalWindow = () => {
 
   //Popup-discount-calculation
   const popupDiscountCalc = () => {
+    let popupDiscountCalc = document.querySelector('.popup-discount-calculation');
     const btnDiscountCalc = document.querySelectorAll('.btnFour'),
-      popupDiscountCalc = document.querySelector('.popup-discount-calculation'),
       popupContentDiscountCalc = document.querySelectorAll('.popup-content')[4],
       discountCalcForm = document.querySelectorAll('.capture-form')[5];
 
@@ -93,8 +93,8 @@ const modalWindow = () => {
 
   //Popup-check
   const popupCheck = () => {
+    let popupCheck = document.querySelector('.popup-check');
     const btnCheck = document.querySelectorAll('.gauging-button'),
-      popupCheck = document.querySelector('.popup-check'),
       popupContentCheck = document.querySelectorAll('.popup-content')[2],
       checkForm = document.querySelectorAll('.capture-form')[3];
 
@@ -104,8 +104,8 @@ const modalWindow = () => {
 
   //Popup-consultation
   const popupConsultation = () => {
+    let popupConsultation = document.querySelector('.popup-consultation');
     const btnConsultation = document.querySelectorAll('.consultation-btn'),
-      popupConsultation = document.querySelector('.popup-consultation'),
       popupContentConsultation = document.querySelectorAll('.popup-content')[3],
       consultationForm = document.querySelectorAll('.capture-form')[4];
 
@@ -320,6 +320,11 @@ const sendForm = () => {
     directorForm = document.querySelector('.director-form'),
     consultationForm = document.querySelectorAll('.capture-form')[4],
     input = document.querySelectorAll('input');
+  let popupCall = document.querySelector('.popup-call'),
+    popupDiscount = document.querySelector('.popup-discount'),
+    popupDiscountCalc = document.querySelector('.popup-discount-calculation'),
+    popupCheck = document.querySelector('.popup-check'),
+    popupConsultation = document.querySelector('.popup-consultation');
 
   //calculator
 
@@ -388,6 +393,7 @@ const sendForm = () => {
     statusMessage.classList.add('statusmessage');
 
     const getForm = (event, form, form2, obj) => {
+
       event.preventDefault();//чтобы страница не перезагружалась по умолчанию
       form.appendChild(statusMessage);
       statusMessage.textContent = loadMessage;//идёт загрузка
@@ -423,10 +429,10 @@ const sendForm = () => {
           statusMessage.textContent = errorMessage;
           console.error(error);
         });
-      setTimeout(() => {//очистка сообщений
+
+      setTimeout(() => {//убираем сообщение
         form.removeChild(statusMessage);
       }, 3000);
-
     };
 
     const inputReset = (form, form2, obj) => {
@@ -450,8 +456,6 @@ const sendForm = () => {
         resetObj();
       }
     };
-
-
 
     function valid(event, form, form2, obj) {
       const elementsForm = [];//пустой массив для инпутов
@@ -486,6 +490,15 @@ const sendForm = () => {
       }
     }
 
+    const popupNone = (form, popupWindow) => {//если сообщение есть, удаляем мод. окно
+      if (form.hasChildNodes(statusMessage)) {
+        setTimeout(() => {
+          popupWindow.style.display = 'none';
+        }, 6000);
+      }
+    };
+
+
     mainForm.addEventListener('submit', (event) => {
       valid(event, mainForm);
     });
@@ -496,22 +509,27 @@ const sendForm = () => {
 
     callForm.addEventListener('submit', (event) => {
       valid(event, callForm);
+      popupNone(callForm, popupCall);
     });
 
     discountForm.addEventListener('submit', (event) => {
       valid(event, discountForm);
+      popupNone(discountForm, popupDiscount);
     });
 
     checkForm.addEventListener('submit', (event) => {
       valid(event, checkForm);
+      popupNone(checkForm, popupCheck);
     });
 
     consultationForm.addEventListener('submit', (event) => {
       valid(event, consultationForm, directorForm);
+      popupNone(consultationForm, popupConsultation);
     });
 
     discountCalcForm.addEventListener('submit', (event) => {//отправка формы
       valid(event, discountCalcForm, null, obj2);
+      popupNone(discountCalcForm, popupDiscountCalc);
     });
 
     const postData = (body) => {//ф. отправки запроса
