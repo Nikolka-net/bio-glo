@@ -533,7 +533,7 @@ const sendForm = () => {
     myOnOffSwitchOne.addEventListener('change', () => {
       if (myOnOffSwitchOne.checked) {
         sumpTwo.style.display = 'none';
-        calcResult.value = +obj.priseOne + 1000;
+        calcResult.value = +obj.priseOne + 1000;//+цена за днище
 
         //1 колодец
 
@@ -576,7 +576,7 @@ const sendForm = () => {
 
       } else if (!myOnOffSwitchOne.checked) {
         sumpTwo.style.display = 'block';
-        calcResult.value = +obj.priseTwo + 1000;
+        calcResult.value = +obj.priseTwo + 2000;
 
         formControl.forEach((elem) => {
           elem.addEventListener('change', () => {
