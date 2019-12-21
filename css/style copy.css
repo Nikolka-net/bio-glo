@@ -683,7 +683,7 @@ header .logo img {
 .constructor .panel-four p::after {
   position: absolute;
   content: "метров";
-  margin-left: 1rem;
+  margin-left: 6rem;
   margin-top: 4.5rem;
   font-family: 'MuseoSansCyrl_med', sans-serif;
   color: #000;
@@ -712,7 +712,7 @@ header .logo img {
 
 #calc-result {
   display: block;
-  width: 28rem;
+  width: 32rem;
   height: 5.3rem;
   margin: 1.5rem auto;
   border: 1px solid #dedede;
@@ -860,8 +860,7 @@ header .logo img {
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
-  align-items: center;
-
+  align-items: center
 }
 
 .director {
@@ -1125,10 +1124,6 @@ header .logo img {
 }
 
 @media (max-width:991px) {
-  .director span {
-    font-size: 2.2rem;
-  }
-
   header .logo span {
     letter-spacing: 0;
     font-size: 1.1rem
@@ -1221,14 +1216,6 @@ header .logo img {
 }
 
 @media (max-width:767px) {
-  .constructor .panel-four p::after {
-    display: none;
-  }
-
-  .director h2 {
-    font-size: 2rem;
-  }
-
   header .logo {
     width: 20rem;
     margin-left: auto;
@@ -1463,25 +1450,6 @@ header .logo img {
     padding: 0
   }
 }
-
-@media (max-width:720px) {
-  .director span {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width:576px) {
-  .director span {
-    font-size: 1.8rem;
-  }
-
-
-
-  .flex-center {
-    flex-direction: column;
-  }
-}
-
 
 @media (max-width:320px) {
   main h1 {
