@@ -13,7 +13,7 @@ import modalWindow from './modules/modalWindow';
 import accordionTwo from './modules/accordionTwo';
 import moreBlocks from './modules/moreBlocks';
 import accordion from './modules/accordion';
-import sendForm from './modules/sendForm';
+import mySendFormCalc from './modules/mySendFormCalc';
 
 
 modalWindow();
@@ -24,4 +24,4 @@ moreBlocks();
 
 accordion();
 
-sendForm();
+mySendFormCalc.start();

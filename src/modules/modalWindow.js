@@ -9,7 +9,7 @@ const modalWindow = () => {
         if (form) {
           for (const elem of form.elements) {//вытаскиваем из формы инпуты
             if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
-              if (elem.style.border === 'solid red') {
+              if (elem.style.border === '2px solid red') {
                 elem.style.border = '';
               }
               //убираем required
