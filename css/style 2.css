@@ -1039,14 +1039,36 @@ header .logo img {
 /* AccordionTwo */
 .collapseOne {
   display: block;
+  position: relative;
 }
 
 .collapseTwo {
   display: none;
+  position: relative;
 }
 
 .collapseThree {
   display: none;
+  position: relative;
+}
+
+.panel-one {
+  position: absolute;
+  background: #fff;
+}
+
+.panel-default-one {
+  position: relative;
+}
+
+.panel-default-two {
+  position: relative;
+  transform: translateY(115px);
+}
+
+.panel-default-three {
+  position: relative;
+  transform: translateY(115px);
 }
 
 /* calculator */

@@ -352,10 +352,10 @@ class SendFormCalc {
     };
     //массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
     this.error = new Set();
-
   }
   start() {
     this.inputCheck();
+    this.maskPhoneUse();
     this.calculator();
     this.sendForm();
   }
@@ -369,8 +369,7 @@ class SendFormCalc {
         }
 
         if (elem.name === 'user_phone') {
-          elem.value = elem.value.replace(/\D/, '');
-          elem.setAttribute('maxlength', '12');//ограничение на кол-во символов
+          elem.setAttribute('maxlength', '18');//ограничение на кол-во символов
         }
 
         if (elem.name === 'user_quest') {//'введите вопрос'
@@ -384,6 +383,46 @@ class SendFormCalc {
 
       });
 
+    });
+  }
+
+  maskPhoneUse() {
+    const elemPhone = document.querySelectorAll('.phone-user');
+    elemPhone.forEach((elem) => {
+
+      const maskPhone = (masked = '+7 (___) ___-__-__') => {
+        function mask(event) {
+          const keyCode = event.keyCode;
+          const template = masked,
+
+            def = template.replace(/\D/g, ""),
+            val = elem.value.replace(/\D/g, "");
+          let i = 0,
+            newValue = template.replace(/[_\d]/g,
+              function (a) {
+                return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
+              });
+          i = newValue.indexOf("_");
+          if (i != -1) {
+            newValue = newValue.slice(0, i);
+          }
+          let reg = template.substr(0, elem.value.length).replace(/_+/g,
+            function (a) {
+              return "\\d{1," + a.length + "}";
+            }).replace(/[+()]/g, "\\$&");
+          reg = new RegExp("^" + reg + "$");
+          if (!reg.test(elem.value) || elem.value.length < 5 || keyCode > 47 && keyCode < 58) {
+            elem.value = newValue;
+          }
+          if (event.type == "blur" && elem.value.length < 5) {
+            elem.value = "";
+          }
+        }
+        elem.addEventListener("input", mask);
+        elem.addEventListener("focus", mask);
+        elem.addEventListener("blur", mask);
+      };
+      maskPhone();
     });
   }
 
@@ -675,8 +714,9 @@ class SendFormCalc {
       }
 
       elementsForm.forEach(elem => {
-        const patternPhone = /^\+?[78]([-()]*\d){10}$/;
         const patternText = (/^[а-яё\s]+$/i);
+        const patternPhone = /^[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}$/;
+        //const patternPhone = /^\+?[7]([-\''()]*\d){18}$/;
         //const patternEmail = /^[\w-]+@\w+\.\w{1,}\D$/;//после точки больше 1 символа, не цифры
 
         if (elem.value.trim() === '' || elem.name === 'user_phone' && !patternPhone.test(elem.value) ||

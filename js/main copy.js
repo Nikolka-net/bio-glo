@@ -1,3 +1,311 @@
+'use strict';
+
+//Мodal window
+
+//Popup-call, popup-discount, popup-check, popup-consultation, popup-discount-calculation
+const modalWindow = () => {
+  const btnAlertModal = (btn, popupWindow, popupWindowContent, form) => {//вызов модального окна
+
+    let count = 0;
+    btn.forEach((elem) => {
+      elem.addEventListener('click', (event) => {
+        event.preventDefault();
+        //убираем border red
+        if (form) {
+          for (const elem of form.elements) {//вытаскиваем из формы инпуты
+            if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+              if (elem.style.border === '2px solid red') {
+                elem.style.border = '';
+              }
+              //убираем required
+              if (elem.hasAttribute('required')) {
+                elem.removeAttribute('required');
+              }
+            }
+          }
+        }
+        popupWindow.style.display = 'block';
+        popupWindowContent.style.cssText = `border: 2px solid #90c406; box-shadow: 2px 4px 10px #222`;
+        let popupInterval;
+        const popupOpacity = function () {
+          popupInterval = requestAnimationFrame(popupOpacity);
+          count++;
+          if (count <= 100) {//уменьшаем прозрачность
+            popupWindowContent.style.opacity = count + '%';
+          } else {
+            cancelAnimationFrame(popupInterval);
+          }
+        };
+        popupOpacity();
+
+      });
+    });
+
+    popupWindow.addEventListener('click', (event) => {
+
+      const countPopupNone = () => {//окно исчезает
+        popupWindow.style.display = 'none';
+        count = 0;
+      };
+      let target = event.target;
+      if (target.matches('.popup-close')) {
+        countPopupNone();
+      } else {
+        target = target.closest('.popup-content');
+        if (!target) {//если не получили popup-content, т.е. получили null при клике за пределами окна
+          countPopupNone();//окно исчезает при клике за пределы окна
+        }
+      }
+    });
+  };
+  //Popup-call
+  const popupCall = () => {
+    let popupCall = document.querySelector('.popup-call');
+    const callBtn = document.querySelectorAll('.call-btn'),
+      popupContentCall = document.querySelectorAll('.popup-content')[0],
+      callForm = document.querySelectorAll('.capture-form')[1];
+
+    btnAlertModal(callBtn, popupCall, popupContentCall, callForm);
+  };
+  popupCall();
+
+  //Popup-discount
+  const popupDiscount = () => {
+    let popupDiscount = document.querySelector('.popup-discount');
+    const btnDiscount = document.querySelectorAll('.discount-btn'),
+      popupContentDiscount = document.querySelectorAll('.popup-content')[1],
+      discountForm = document.querySelectorAll('.capture-form')[2];
+
+    btnAlertModal(btnDiscount, popupDiscount, popupContentDiscount, discountForm);
+  };
+  popupDiscount();
+
+  //Popup-discount-calculation
+  const popupDiscountCalc = () => {
+    let popupDiscountCalc = document.querySelector('.popup-discount-calculation');
+    const btnDiscountCalc = document.querySelectorAll('.btnFour'),
+      popupContentDiscountCalc = document.querySelectorAll('.popup-content')[4],
+      discountCalcForm = document.querySelectorAll('.capture-form')[5];
+
+    btnAlertModal(btnDiscountCalc, popupDiscountCalc, popupContentDiscountCalc, discountCalcForm);
+  };
+  popupDiscountCalc();
+
+  //Popup-check
+  const popupCheck = () => {
+    let popupCheck = document.querySelector('.popup-check');
+    const btnCheck = document.querySelectorAll('.gauging-button'),
+      popupContentCheck = document.querySelectorAll('.popup-content')[2],
+      checkForm = document.querySelectorAll('.capture-form')[3];
+
+    btnAlertModal(btnCheck, popupCheck, popupContentCheck, checkForm);
+  };
+  popupCheck();
+
+  //Popup-consultation
+  const popupConsultation = () => {
+    let popupConsultation = document.querySelector('.popup-consultation');
+    const btnConsultation = document.querySelectorAll('.consultation-btn'),
+      popupContentConsultation = document.querySelectorAll('.popup-content')[3],
+      consultationForm = document.querySelectorAll('.capture-form')[4];
+
+
+    btnAlertModal(btnConsultation, popupConsultation, popupContentConsultation, consultationForm);
+  };
+  popupConsultation();
+
+
+
+};
+modalWindow();
+
+//AccordionTwo
+
+const accordionTwo = () => {
+
+  const btnAccordionTwo = document.querySelectorAll(`a[data-parent="#accordion-two"]`),
+    collapseOne = document.querySelector('.collapseOne'),
+    collapseTwo = document.querySelector('.collapseTwo'),
+    collapseThree = document.querySelector('.collapseThree');
+
+
+  const sailOpacityTwo = (panelCollapse) => {//плавное появление
+    let count = 30;
+    let panelInterval;
+    const panelOpacityTwo = function () {
+      panelInterval = requestAnimationFrame(panelOpacityTwo);
+      count++;
+      if (count <= 100) {//уменьшаем прозрачность
+        panelCollapse.style.opacity = count + '%';
+      } else {
+        cancelAnimationFrame(panelInterval);
+      }
+    };
+    panelOpacityTwo();
+  };
+
+  btnAccordionTwo.forEach((elem) => {
+    elem.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      if (elem.closest('#headingOne-two')) {
+
+        if (collapseOne.style.display === 'none') {
+          collapseOne.style.display = 'block';
+          sailOpacityTwo(collapseOne);
+          collapseTwo.style.display = 'none';
+          collapseThree.style.display = 'none';
+
+        } else {
+          collapseOne.style.display = 'block';
+        }
+      }
+
+      if (elem.closest('#headingTwo-two')) {
+
+        if (collapseTwo.style.display === 'block') {
+          collapseTwo.style.display = 'block';
+        } else {
+          collapseOne.style.display = 'none';
+          collapseTwo.style.display = 'block';
+          sailOpacityTwo(collapseTwo);
+          collapseThree.style.display = 'none';
+        }
+      }
+
+      if (elem.closest('#headingThree-two')) {
+
+        if (collapseThree.style.display === 'block') {
+          collapseThree.style.display = 'block';
+        } else {
+          collapseOne.style.display = 'none';
+          collapseTwo.style.display = 'none';
+          collapseThree.style.display = 'block';
+          sailOpacityTwo(collapseThree);
+        }
+      }
+    });
+
+  });
+
+};
+accordionTwo();
+
+//More blocks, sentence
+
+const moreBlocks = () => {
+  const shadowBlocks = document.querySelectorAll(`.col-xs-12.col-sm-6.col-md-4`),
+    btnAddSentence = document.querySelector('.add-sentence-btn');
+
+
+  btnAddSentence.addEventListener('click', (event) => {
+    event.preventDefault();
+    shadowBlocks.forEach((elem) => {
+      if (elem.matches('.visible-sm-block') || elem.matches('.hidden')) {
+        elem.classList.remove('visible-sm-block', 'hidden');
+        btnAddSentence.style.cssText = `transform: scale(0)`;
+      }
+
+    });
+
+  });
+
+};
+
+moreBlocks();
+
+//Accordion
+
+const accordion = () => {
+  const btnAccordion = document.querySelectorAll(`a[data-parent="#accordion"]`),
+    collapseOneId = document.getElementById('collapseOne'),
+    collapseTwoId = document.getElementById('collapseTwo'),
+    collapseThreeId = document.getElementById('collapseThree');
+  let collapseFourId = document.getElementById('collapseFour');
+
+  const sailOpacityOne = (panelCollapse) => {//плавное появление
+    let count = 40;
+    let panelInterval;
+    const panelOpacityOne = function () {
+      panelInterval = requestAnimationFrame(panelOpacityOne);
+      count++;
+      if (count <= 100) {//уменьшаем прозрачность
+        panelCollapse.style.opacity = count + '%';
+      } else {
+        cancelAnimationFrame(panelInterval);
+      }
+    };
+    panelOpacityOne();
+  };
+
+  btnAccordion.forEach((elem) => {
+    elem.addEventListener('click', (event) => {
+      event.preventDefault();
+      //One
+      if (elem.closest('#headingOne')) {
+        if (collapseOneId.style.display === 'none') {
+          collapseOneId.style.display = 'block';
+          sailOpacityOne(collapseOneId);
+          collapseTwoId.style.display = 'none';
+          collapseThreeId.style.display = 'none';
+          collapseFourId.style.display = 'none';
+
+        } else {
+          collapseOneId.style.display = 'block';
+        }
+      }
+      //Two
+      if (elem.closest('#headingTwo') || elem.matches('.btnOne')) {
+
+        if (collapseTwoId.style.display === 'block') {
+          collapseTwoId.style.display = 'block';
+
+        } else {
+          collapseOneId.style.display = 'none';
+          collapseTwoId.style.display = 'block';
+          sailOpacityOne(collapseTwoId);
+          collapseThreeId.style.display = 'none';
+          collapseFourId.style.display = 'none';
+        }
+      }
+      //Three
+      if (elem.closest('#headingThree') || elem.matches('.btnTwo')) {
+
+        if (collapseThreeId.style.display === 'block') {
+          collapseThreeId.style.display = 'block';
+
+        } else {
+          collapseOneId.style.display = 'none';
+          collapseTwoId.style.display = 'none';
+          collapseThreeId.style.display = 'block';
+          sailOpacityOne(collapseThreeId);
+          collapseFourId.style.display = 'none';
+        }
+      }
+      //Four
+      if (elem.closest('#headingFour') || elem.matches('.btnThree')) {
+
+        if (collapseFourId.style.display === 'block') {
+          collapseFourId.style.display = 'block';
+
+        } else {
+          collapseOneId.style.display = 'none';
+          collapseTwoId.style.display = 'none';
+          collapseThreeId.style.display = 'none';
+          collapseFourId.style.display = 'block';
+          sailOpacityOne(collapseFourId);
+        }
+      }
+
+    });
+
+  });
+
+};
+accordion();
+
+//Send form and calculator
+
 class SendFormCalc {
   constructor() {
     this.obj = {
@@ -44,10 +352,10 @@ class SendFormCalc {
     };
     //массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
     this.error = new Set();
+
   }
   start() {
     this.inputCheck();
-    this.maskPhoneUse();
     this.calculator();
     this.sendForm();
   }
@@ -61,7 +369,8 @@ class SendFormCalc {
         }
 
         if (elem.name === 'user_phone') {
-          elem.setAttribute('maxlength', '18');//ограничение на кол-во символов
+          elem.value = elem.value.replace(/\D/, '');
+          elem.setAttribute('maxlength', '12');//ограничение на кол-во символов
         }
 
         if (elem.name === 'user_quest') {//'введите вопрос'
@@ -75,46 +384,6 @@ class SendFormCalc {
 
       });
 
-    });
-  }
-
-  maskPhoneUse() {
-    const elemPhone = document.querySelectorAll('.phone-user');
-    elemPhone.forEach((elem) => {
-
-      const maskPhone = (masked = '+7 (___) ___-__-__') => {
-        function mask(event) {
-          const keyCode = event.keyCode;
-          const template = masked,
-
-            def = template.replace(/\D/g, ""),
-            val = elem.value.replace(/\D/g, "");
-          let i = 0,
-            newValue = template.replace(/[_\d]/g,
-              function (a) {
-                return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
-              });
-          i = newValue.indexOf("_");
-          if (i != -1) {
-            newValue = newValue.slice(0, i);
-          }
-          let reg = template.substr(0, elem.value.length).replace(/_+/g,
-            function (a) {
-              return "\\d{1," + a.length + "}";
-            }).replace(/[+()]/g, "\\$&");
-          reg = new RegExp("^" + reg + "$");
-          if (!reg.test(elem.value) || elem.value.length < 5 || keyCode > 47 && keyCode < 58) {
-            elem.value = newValue;
-          }
-          if (event.type == "blur" && elem.value.length < 5) {
-            elem.value = "";
-          }
-        }
-        elem.addEventListener("input", mask);
-        elem.addEventListener("focus", mask);
-        elem.addEventListener("blur", mask);
-      };
-      maskPhone();
     });
   }
 
@@ -406,9 +675,8 @@ class SendFormCalc {
       }
 
       elementsForm.forEach(elem => {
+        const patternPhone = /^\+?[78]([-()]*\d){10}$/;
         const patternText = (/^[а-яё\s]+$/i);
-        const patternPhone = /^[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}$/;
-        //const patternPhone = /^\+?[7]([-\''()]*\d){18}$/;
         //const patternEmail = /^[\w-]+@\w+\.\w{1,}\D$/;//после точки больше 1 символа, не цифры
 
         if (elem.value.trim() === '' || elem.name === 'user_phone' && !patternPhone.test(elem.value) ||
@@ -592,5 +860,5 @@ class SendFormCalc {
 }
 
 const mySendFormCalc = new SendFormCalc();
+mySendFormCalc.start();
 
-export default mySendFormCalc;
