@@ -391,7 +391,7 @@ class SendFormCalc {
     const myOnOffSwitchOne = document.getElementById('myonoffswitch');
     const myOnOffSwitchTwo = document.getElementById('myonoffswitch-two');
 
-    this.elemDoc.calcResult.value = +this.obj.priseOne + 1000;//значение по умолчанию
+    // this.elemDoc.calcResult.value = +this.obj.priseOne + 1000;//значение по умолчанию
     myOnOffSwitchOne.addEventListener('change', () => {
       if (myOnOffSwitchOne.checked) {//если чекбокс включён
 
@@ -399,6 +399,7 @@ class SendFormCalc {
         const chamberOne = () => {
           this.elemDoc.sumpTwo.style.display = 'none';
           this.elemDoc.calcResult.value = +this.obj.priseOne + 1000;//цена за днище
+
           this.elemDoc.formControl.forEach((elem) => {
 
             elem.addEventListener('change', () => {
@@ -657,9 +658,11 @@ class SendFormCalc {
       loadMessage = 'Идёт отправка',
       errorMessage = 'Что-то пошло не так...';
 
-    //создаём элемент с классом
+    //создаём элемент с классом для вывода сообщения
     const statusMessage = document.createElement('div');
     statusMessage.classList.add('statusmessage');
+    const statusDiv = document.createElement('div');
+    statusDiv.classList.add('statusdiv');
 
     //валидация инпутов
     const valid = (event, form) => {
@@ -696,7 +699,9 @@ class SendFormCalc {
       const getForm = (event, form, form2, obj) => {
 
         event.preventDefault();//чтобы страница не перезагружалась по умолчанию
-        form.appendChild(statusMessage);
+        form.appendChild(statusDiv);
+        statusDiv.appendChild(statusMessage);
+
         statusMessage.textContent = loadMessage;//идёт загрузка
         let body = {};//объект, ко-й отправл. на сервер в формате json
 
@@ -744,7 +749,7 @@ class SendFormCalc {
           });
 
         setTimeout(() => {//убираем сообщение
-          form.removeChild(statusMessage);
+          form.removeChild(statusDiv);
         }, 3000);
       };
 
