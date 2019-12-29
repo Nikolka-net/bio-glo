@@ -16,31 +16,12 @@ class SendFormCalc {
     };
     this.elemDoc = {
       //calculator elem
-      input: document.querySelectorAll('input'),
-      calcResult: document.getElementById('calc-result'),
-      sumpTwo: document.querySelector('.sumpTwo'),
-      formControl: document.querySelectorAll('.form-control'),
       formDiameterOne: document.querySelectorAll('.form-control')[0],
       formNumberOne: document.querySelectorAll('.form-control')[1],
       formDiameterTwo: document.querySelectorAll('.form-control')[2],
       formNumberTwo: document.querySelectorAll('.form-control')[3],
       inputDistance: document.querySelector('.distance'),
-      btnFour: document.querySelector('.btnFour'),
-      collapseFourId: document.getElementById('collapseFour'),
-      //send form elem
-      mainForm: document.querySelector('.main-form'),
-      captureForm: document.querySelectorAll('.capture-form')[0],
-      callForm: document.querySelectorAll('.capture-form')[1],
-      discountForm: document.querySelectorAll('.capture-form')[2],
-      discountCalcForm: document.querySelectorAll('.capture-form')[5],
-      checkForm: document.querySelectorAll('.capture-form')[3],
-      directorForm: document.querySelector('.director-form'),
-      consultationForm: document.querySelectorAll('.capture-form')[4],
-      popupCall: document.querySelector('.popup-call'),
-      popupDiscount: document.querySelector('.popup-discount'),
-      popupDiscountCalc: document.querySelector('.popup-discount-calculation'),
-      popupCheck: document.querySelector('.popup-check'),
-      popupConsultation: document.querySelector('.popup-consultation'),
+      calcResult: document.getElementById('calc-result'),
     };
     //массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
     this.error = new Set();
@@ -53,7 +34,8 @@ class SendFormCalc {
   }
 
   inputCheck() {//ввод. в инпут только цифры и кириллица
-    this.elemDoc.input.forEach((elem) => {
+    const input = document.querySelectorAll('input');
+    input.forEach((elem) => {
       elem.addEventListener('input', () => {
         if (elem.name === 'user_name') {
           elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
@@ -119,8 +101,20 @@ class SendFormCalc {
   }
 
   calculator() {
-    const myOnOffSwitchOne = document.getElementById('myonoffswitch');
-    const myOnOffSwitchTwo = document.getElementById('myonoffswitch-two');
+    //calculator elem
+    const calcResult = document.getElementById('calc-result'),
+      sumpTwo = document.querySelector('.sumpTwo'),
+      formControl = document.querySelectorAll('.form-control'),
+      formDiameterOne = document.querySelectorAll('.form-control')[0],
+      formNumberOne = document.querySelectorAll('.form-control')[1],
+      formDiameterTwo = document.querySelectorAll('.form-control')[2],
+      formNumberTwo = document.querySelectorAll('.form-control')[3],
+      inputDistance = document.querySelector('.distance'),
+      btnFour = document.querySelector('.btnFour'),
+      collapseFourId = document.getElementById('collapseFour');
+
+    const myOnOffSwitchOne = document.getElementById('myonoffswitch'),
+      myOnOffSwitchTwo = document.getElementById('myonoffswitch-two');
 
     // this.elemDoc.calcResult.value = +this.obj.priseOne + 1000;//значение по умолчанию
     myOnOffSwitchOne.addEventListener('change', () => {
@@ -128,40 +122,40 @@ class SendFormCalc {
 
         //1 колодец
         const chamberOne = () => {
-          this.elemDoc.sumpTwo.style.display = 'none';
-          this.elemDoc.calcResult.value = +this.obj.priseOne + 1000;//цена за днище
+          sumpTwo.style.display = 'none';
+          calcResult.value = +this.obj.priseOne + 1000;//цена за днище
 
-          this.elemDoc.formControl.forEach((elem) => {
+          formControl.forEach((elem) => {
 
             elem.addEventListener('change', () => {
 
-              if (this.elemDoc.formDiameterOne.value === '1.4 метра') {
+              if (formDiameterOne.value === '1.4 метра') {
 
-                if (this.elemDoc.formNumberOne.value === '1 штука') {
-                  this.elemDoc.calcResult.value = 10000;
+                if (formNumberOne.value === '1 штука') {
+                  calcResult.value = 10000;
                 }
-                if (this.elemDoc.formNumberOne.value === '2 штуки') {
-                  this.elemDoc.calcResult.value = ((10000 * 30) / 100) + 10000;
-                } else if (this.elemDoc.formNumberOne.value === '3 штуки') {
-                  this.elemDoc.calcResult.value = ((10000 * 50) / 100) + 10000;
+                if (formNumberOne.value === '2 штуки') {
+                  calcResult.value = ((10000 * 30) / 100) + 10000;
+                } else if (formNumberOne.value === '3 штуки') {
+                  calcResult.value = ((10000 * 50) / 100) + 10000;
                 }
               }
 
-              if (this.elemDoc.formDiameterOne.value === '2 метра') {
-                this.elemDoc.calcResult.value = ((10000 * 20) / 100) + 10000;
+              if (formDiameterOne.value === '2 метра') {
+                calcResult.value = ((10000 * 20) / 100) + 10000;
 
-                if (this.elemDoc.formNumberOne.value === '1 штука') {
-                  this.elemDoc.calcResult.value = 12000;
+                if (formNumberOne.value === '1 штука') {
+                  calcResult.value = 12000;
                 }
-                if (this.elemDoc.formNumberOne.value === '2 штуки') {
-                  this.elemDoc.calcResult.value = ((10000 * 30) / 100) + 12000;
-                } else if (this.elemDoc.formNumberOne.value === '3 штуки') {
-                  this.elemDoc.calcResult.value = ((10000 * 50) / 100) + 12000;
+                if (formNumberOne.value === '2 штуки') {
+                  calcResult.value = ((10000 * 30) / 100) + 12000;
+                } else if (formNumberOne.value === '3 штуки') {
+                  calcResult.value = ((10000 * 50) / 100) + 12000;
                 }
               }
               //
-              this.obj.wellOne = this.elemDoc.calcResult.value;
-              this.elemDoc.calcResult.value = +this.elemDoc.calcResult.value + 1000;//отображаем в примерной стоимости
+              this.obj.wellOne = calcResult.value;
+              calcResult.value = +calcResult.value + 1000;//отображаем в примерной стоимости
 
             });
           });
@@ -171,117 +165,117 @@ class SendFormCalc {
         //2 колодца
       } else if (!myOnOffSwitchOne.checked) {
         const chamberTwo = () => {
-          this.elemDoc.sumpTwo.style.display = 'block';
-          this.elemDoc.calcResult.value = +this.obj.priseTwo + 2000;
+          sumpTwo.style.display = 'block';
+          calcResult.value = +this.obj.priseTwo + 2000;
 
-          this.elemDoc.formControl.forEach((elem) => {
+          formControl.forEach((elem) => {
             elem.addEventListener('change', () => {
               //1 proviso
-              if (this.elemDoc.sumpTwo.style.display === 'block') {
-                if (this.elemDoc.formDiameterOne.value === '1.4 метра' && this.elemDoc.formDiameterTwo.value === '1.4 метра') {
+              if (sumpTwo.style.display === 'block') {
+                if (formDiameterOne.value === '1.4 метра' && formDiameterTwo.value === '1.4 метра') {
                   //1шт
-                  if (this.elemDoc.formNumberOne.value === '1 штука') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = 15000;//15000
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = (15000 * 30) / 100 + 15000;//19500
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = (15000 * 50) / 100 + 15000;//22500
+                  if (formNumberOne.value === '1 штука') {
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = 15000;//15000
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = (15000 * 30) / 100 + 15000;//19500
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = (15000 * 50) / 100 + 15000;//22500
                     }
                   }
                   //2шт
-                  if (this.elemDoc.formNumberOne.value === '2 штуки') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = (15000 * 30) / 100 + 15000;//19500
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = ((15000 * 30) / 100) * 2 + 15000;//24000
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 15000;//27000
+                  if (formNumberOne.value === '2 штуки') {
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = (15000 * 30) / 100 + 15000;//19500
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = ((15000 * 30) / 100) * 2 + 15000;//24000
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 15000;//27000
                     }
                   }
                   //3шт
-                  if (this.elemDoc.formNumberOne.value === '3 штуки') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = (15000 * 50) / 100 + 15000;//22500
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 15000;//27000
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = ((15000 * 50) / 100) * 2 + 15000;//30000
+                  if (formNumberOne.value === '3 штуки') {
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = (15000 * 50) / 100 + 15000;//22500
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 15000;//27000
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = ((15000 * 50) / 100) * 2 + 15000;//30000
                     }
                   }
                 }
                 //2 proviso
-                if (this.elemDoc.formDiameterOne.value === '2 метра' && this.elemDoc.formDiameterTwo.value === '1.4 метра' ||
-                  this.elemDoc.formDiameterOne.value === '1.4 метра' && this.elemDoc.formDiameterTwo.value === '2 метра') {
+                if (formDiameterOne.value === '2 метра' && formDiameterTwo.value === '1.4 метра' ||
+                  formDiameterOne.value === '1.4 метра' && formDiameterTwo.value === '2 метра') {
                   this.elemDoc.calcResult.value = ((15000 * 20) / 100) + 15000;//18000
                   //1шт
-                  if (this.elemDoc.formNumberOne.value === '1 штука') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = 18000;//18000
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = (15000 * 30) / 100 + 18000;//22500
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = (15000 * 50) / 100 + 18000;//25500
+                  if (formNumberOne.value === '1 штука') {
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = 18000;//18000
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = (15000 * 30) / 100 + 18000;//22500
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = (15000 * 50) / 100 + 18000;//25500
                     }
                   }
                   //2шт
-                  if (this.elemDoc.formNumberOne.value === '2 штуки') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
+                  if (formNumberOne.value === '2 штуки') {
+                    if (formNumberTwo.value === '1 штука') {
                       this.elemDoc.calcResult.value = (15000 * 30) / 100 + 18000;//22500
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = ((15000 * 30) / 100) * 2 + 18000;//27000
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 18000;//30000
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = ((15000 * 30) / 100) * 2 + 18000;//27000
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 18000;//30000
                     }
                   }
                   //3шт
-                  if (this.elemDoc.formNumberOne.value === '3 штуки') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = (15000 * 50) / 100 + 18000;//25500
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 18000;//30000
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = ((15000 * 50) / 100) * 2 + 18000;//33000
+                  if (formNumberOne.value === '3 штуки') {
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = (15000 * 50) / 100 + 18000;//25500
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 18000;//30000
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = ((15000 * 50) / 100) * 2 + 18000;//33000
                     }
                   }
                 }
                 //3 proviso
-                if (this.elemDoc.formDiameterOne.value === '2 метра' && this.elemDoc.formDiameterTwo.value === '2 метра') {
-                  this.elemDoc.calcResult.value = ((15000 * 20) / 100) * 2 + 15000;//21000
+                if (formDiameterOne.value === '2 метра' && formDiameterTwo.value === '2 метра') {
+                  calcResult.value = ((15000 * 20) / 100) * 2 + 15000;//21000
                   //1шт
                   if (this.elemDoc.formNumberOne.value === '1 штука') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = 21000;//21000
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = (15000 * 30) / 100 + 21000;//25500
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = (15000 * 50) / 100 + 21000;//28500
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = 21000;//21000
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = (15000 * 30) / 100 + 21000;//25500
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = (15000 * 50) / 100 + 21000;//28500
                     }
                   }
                   //2шт
-                  if (this.elemDoc.formNumberOne.value === '2 штуки') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = (15000 * 30) / 100 + 21000;//25500
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = ((15000 * 30) / 100) * 2 + 21000;//30000
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 21000;//33000
+                  if (formNumberOne.value === '2 штуки') {
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = (15000 * 30) / 100 + 21000;//25500
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = ((15000 * 30) / 100) * 2 + 21000;//30000
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 21000;//33000
                     }
                   }
                   //3шт
-                  if (this.elemDoc.formNumberOne.value === '3 штуки') {
-                    if (this.elemDoc.formNumberTwo.value === '1 штука') {
-                      this.elemDoc.calcResult.value = (15000 * 50) / 100 + 21000;//28500
-                    } else if (this.elemDoc.formNumberTwo.value === '2 штуки') {
-                      this.elemDoc.calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 21000;//33000
-                    } else if (this.elemDoc.formNumberTwo.value === '3 штуки') {
-                      this.elemDoc.calcResult.value = ((15000 * 50) / 100) * 2 + 21000;//36000
+                  if (formNumberOne.value === '3 штуки') {
+                    if (formNumberTwo.value === '1 штука') {
+                      calcResult.value = (15000 * 50) / 100 + 21000;//28500
+                    } else if (formNumberTwo.value === '2 штуки') {
+                      calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 21000;//33000
+                    } else if (formNumberTwo.value === '3 штуки') {
+                      calcResult.value = ((15000 * 50) / 100) * 2 + 21000;//36000
                     }
                   }
                 }
                 //
-                this.obj.wellTwo = this.elemDoc.calcResult.value;
-                this.elemDoc.calcResult.value = +this.elemDoc.calcResult.value + 2000;
+                this.obj.wellTwo = calcResult.value;
+                calcResult.value = +calcResult.value + 2000;
               }
             });
           });
@@ -293,33 +287,33 @@ class SendFormCalc {
     const wellBottom = () => {
       myOnOffSwitchTwo.addEventListener('change', () => {
         if (myOnOffSwitchTwo.checked) {
-          if (this.elemDoc.sumpTwo.style.display === 'none') {
+          if (sumpTwo.style.display === 'none') {
             if (+this.obj.wellOne > 0) {
-              this.elemDoc.calcResult.value = +this.obj.wellOne + 1000;
+              calcResult.value = +this.obj.wellOne + 1000;
             } else if (+this.obj.wellOne === 0) {
-              this.elemDoc.calcResult.value = +this.obj.priseOne + 1000;
+              calcResult.value = +this.obj.priseOne + 1000;
             }
           }
-          if (this.elemDoc.sumpTwo.style.display === 'block') {
+          if (sumpTwo.style.display === 'block') {
             if (+this.obj.wellTwo > 0) {
-              this.elemDoc.calcResult.value = +this.obj.wellTwo + 2000;
+              calcResult.value = +this.obj.wellTwo + 2000;
             } else if (+this.obj.wellTwo === 0) {
-              this.elemDoc.calcResult.value = +this.obj.priseTwo + 2000;
+              calcResult.value = +this.obj.priseTwo + 2000;
             }
           }
         } else if (!myOnOffSwitchTwo.checked) {
-          if (this.elemDoc.sumpTwo.style.display === 'none') {
+          if (sumpTwo.style.display === 'none') {
             if (+this.obj.wellOne > 0) {
-              this.elemDoc.calcResult.value = +this.obj.wellOne;
+              calcResult.value = +this.obj.wellOne;
             } else {
-              this.elemDoc.calcResult.value = +this.obj.priseOne;
+              calcResult.value = +this.obj.priseOne;
             }
           }
-          if (this.elemDoc.sumpTwo.style.display === 'block') {
+          if (sumpTwo.style.display === 'block') {
             if (+this.obj.wellTwo > 0) {
-              this.elemDoc.calcResult.value = +this.obj.wellTwo;
+              calcResult.value = +this.obj.wellTwo;
             } else {
-              this.elemDoc.calcResult.value = +this.obj.priseTwo;
+              calcResult.value = +this.obj.priseTwo;
             }
           }
         }
@@ -336,22 +330,22 @@ class SendFormCalc {
 
     //передаём значения в объект2
     const elemObj2 = () => {
-      this.elemDoc.formControl.forEach((elem) => {
+      formControl.forEach((elem) => {
         elem.addEventListener('change', () => {
-          if (this.elemDoc.sumpTwo.style.display === 'block') {
-            if (elem === this.elemDoc.formDiameterOne) {
+          if (sumpTwo.style.display === 'block') {
+            if (elem === formDiameterOne) {
               this.obj2.diameter1 = elem.value;
-            } else if (elem === this.elemDoc.formNumberOne) {
+            } else if (elem === formNumberOne) {
               this.obj2.number1 = elem.value;
-            } else if (elem === this.elemDoc.formDiameterTwo) {
+            } else if (elem === formDiameterTwo) {
               this.obj2.diameter2 = elem.value;
-            } else if (elem === this.elemDoc.formNumberTwo) {
+            } else if (elem === formNumberTwo) {
               this.obj2.number2 = elem.value;
             }
-          } if (this.elemDoc.sumpTwo.style.display === 'none') {
-            if (elem === this.elemDoc.formDiameterOne) {
+          } if (sumpTwo.style.display === 'none') {
+            if (elem === formDiameterOne) {
               this.obj2.diameter1 = elem.value;
-            } else if (elem === this.elemDoc.formNumberOne) {
+            } else if (elem === formNumberOne) {
               this.obj2.number1 = elem.value;
             }
             deletElemObj2();//очистка значений при 1 колодце
@@ -363,21 +357,21 @@ class SendFormCalc {
 
     //Передаём расстояние в объект2
     const inputDistanceObj = () => {
-      this.elemDoc.inputDistance.addEventListener('input', () => {
-        this.obj2.result = +this.elemDoc.calcResult.value;
-        this.obj2.distance = +this.elemDoc.inputDistance.value;
+      inputDistance.addEventListener('input', () => {
+        this.obj2.result = +calcResult.value;
+        this.obj2.distance = +inputDistance.value;
       });
     };
     inputDistanceObj();
 
     //Закрываем последний блок
     const closeCollapseFour = () => {
-      this.elemDoc.btnFour.addEventListener('click', () => {//закрываем последний блок при нажатии на кнопку "получить расчёт"
-        if (this.elemDoc.sumpTwo.style.display === 'none') {//проверка при выборе 1 колодца
+      btnFour.addEventListener('click', () => {//закрываем последний блок при нажатии на кнопку "получить расчёт"
+        if (sumpTwo.style.display === 'none') {//проверка при выборе 1 колодца
           deletElemObj2();//очистка значений
         }
-        if (this.elemDoc.collapseFourId.style.display === 'block') {
-          this.elemDoc.collapseFourId.style.display = 'none';
+        if (collapseFourId.style.display === 'block') {
+          collapseFourId.style.display = 'none';
         }
       });
     };
@@ -385,6 +379,21 @@ class SendFormCalc {
   }
 
   sendForm() {
+    //send form elem
+    const mainForm = document.querySelector('.main-form'),
+      captureForm = document.querySelectorAll('.capture-form')[0],
+      callForm = document.querySelectorAll('.capture-form')[1],
+      discountForm = document.querySelectorAll('.capture-form')[2],
+      discountCalcForm = document.querySelectorAll('.capture-form')[5],
+      checkForm = document.querySelectorAll('.capture-form')[3],
+      directorForm = document.querySelector('.director-form'),
+      consultationForm = document.querySelectorAll('.capture-form')[4],
+      popupCall = document.querySelector('.popup-call'),
+      popupDiscount = document.querySelector('.popup-discount'),
+      popupDiscountCalc = document.querySelector('.popup-discount-calculation'),
+      popupCheck = document.querySelector('.popup-check'),
+      popupConsultation = document.querySelector('.popup-consultation');
+
     const successMessage = 'Сообщение отправлено',
       loadMessage = 'Идёт отправка',
       errorMessage = 'Что-то пошло не так...';
@@ -417,6 +426,7 @@ class SendFormCalc {
           elem.style.border = '2px solid red';
           this.error.add(elem);//добавл. инпуты с ошибками в Set
         } else {
+          event.preventDefault();
           this.error.delete(elem);//удал. инпуты из Seta
           elem.style.border = '';
         }
@@ -547,44 +557,51 @@ class SendFormCalc {
     };
 
     //отправка данных с форм
-    this.elemDoc.mainForm.addEventListener('submit', (event) => {
-      valid(event, this.elemDoc.mainForm);
-      sendReset(event, this.elemDoc.mainForm);
+    mainForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      valid(event, mainForm);
+      sendReset(event, mainForm);
     });
 
-    this.elemDoc.captureForm.addEventListener('submit', (event) => {
-      valid(event, this.elemDoc.captureForm);
-      sendReset(event, this.elemDoc.captureForm);
+    captureForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      valid(event, captureForm);
+      sendReset(event, captureForm);
     });
 
-    this.elemDoc.callForm.addEventListener('submit', (event) => {
-      valid(event, this.elemDoc.callForm);
-      sendReset(event, this.elemDoc.callForm);
-      popupNone(this.elemDoc.popupCall);
+    callForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      valid(event, callForm);
+      sendReset(event, callForm);
+      popupNone(popupCall);
     });
 
-    this.elemDoc.discountForm.addEventListener('submit', (event) => {
-      valid(event, this.elemDoc.discountForm);
-      sendReset(event, this.elemDoc.discountForm);
-      popupNone(this.elemDoc.popupDiscount);
+    discountForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      valid(event, discountForm);
+      sendReset(event, discountForm);
+      popupNone(popupDiscount);
     });
 
-    this.elemDoc.checkForm.addEventListener('submit', (event) => {
-      valid(event, this.elemDoc.checkForm);
-      sendReset(event, this.elemDoc.checkForm);
-      popupNone(this.elemDoc.popupCheck);
+    checkForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      valid(event, checkForm);
+      sendReset(event, checkForm);
+      popupNone(popupCheck);
     });
 
-    this.elemDoc.consultationForm.addEventListener('submit', (event) => {
-      valid(event, this.elemDoc.consultationForm);
-      sendReset(event, this.elemDoc.consultationForm, this.elemDoc.directorForm);
-      popupNone(this.elemDoc.popupConsultation);
+    consultationForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      valid(event, consultationForm);
+      sendReset(event, consultationForm, directorForm);
+      popupNone(popupConsultation);
     });
 
-    this.elemDoc.discountCalcForm.addEventListener('submit', (event) => {//отправка формы
-      valid(event, this.elemDoc.discountCalcForm);
-      sendReset(event, this.elemDoc.discountCalcForm, null, this.obj2);
-      popupNone(this.elemDoc.popupDiscountCalc);
+    discountCalcForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      valid(event, discountCalcForm);
+      sendReset(event, discountCalcForm, null, this.obj2);
+      popupNone(popupDiscountCalc);
     });
 
   }
