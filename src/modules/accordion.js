@@ -5,6 +5,21 @@ const accordion = () => {
     collapseThreeId = document.getElementById('collapseThree');
   let collapseFourId = document.getElementById('collapseFour');
 
+  const sailOpacityOne = (panelCollapse) => {//плавное появление
+    let count = 40;
+    let panelInterval;
+    const panelOpacityOne = function () {
+      panelInterval = requestAnimationFrame(panelOpacityOne);
+      count++;
+      if (count <= 100) {//уменьшаем прозрачность
+        panelCollapse.style.opacity = count + '%';
+      } else {
+        cancelAnimationFrame(panelInterval);
+      }
+    };
+    panelOpacityOne();
+  };
+
   btnAccordion.forEach((elem) => {
     elem.addEventListener('click', (event) => {
       event.preventDefault();
@@ -12,6 +27,7 @@ const accordion = () => {
       if (elem.closest('#headingOne')) {
         if (collapseOneId.style.display === 'none') {
           collapseOneId.style.display = 'block';
+          sailOpacityOne(collapseOneId);
           collapseTwoId.style.display = 'none';
           collapseThreeId.style.display = 'none';
           collapseFourId.style.display = 'none';
@@ -29,6 +45,7 @@ const accordion = () => {
         } else {
           collapseOneId.style.display = 'none';
           collapseTwoId.style.display = 'block';
+          sailOpacityOne(collapseTwoId);
           collapseThreeId.style.display = 'none';
           collapseFourId.style.display = 'none';
         }
@@ -43,6 +60,7 @@ const accordion = () => {
           collapseOneId.style.display = 'none';
           collapseTwoId.style.display = 'none';
           collapseThreeId.style.display = 'block';
+          sailOpacityOne(collapseThreeId);
           collapseFourId.style.display = 'none';
         }
       }
@@ -57,13 +75,13 @@ const accordion = () => {
           collapseTwoId.style.display = 'none';
           collapseThreeId.style.display = 'none';
           collapseFourId.style.display = 'block';
+          sailOpacityOne(collapseFourId);
         }
       }
 
     });
 
   });
-
 
 };
 

@@ -5,13 +5,31 @@ const accordionTwo = () => {
     collapseTwo = document.querySelector('.collapseTwo'),
     collapseThree = document.querySelector('.collapseThree');
 
+
+  const sailOpacityTwo = (panelCollapse) => {//плавное появление
+    let count = 30;
+    let panelInterval;
+    const panelOpacityTwo = function () {
+      panelInterval = requestAnimationFrame(panelOpacityTwo);
+      count++;
+      if (count <= 100) {//уменьшаем прозрачность
+        panelCollapse.style.opacity = count + '%';
+      } else {
+        cancelAnimationFrame(panelInterval);
+      }
+    };
+    panelOpacityTwo();
+  };
+
   btnAccordionTwo.forEach((elem) => {
     elem.addEventListener('click', (event) => {
       event.preventDefault();
+
       if (elem.closest('#headingOne-two')) {
 
         if (collapseOne.style.display === 'none') {
           collapseOne.style.display = 'block';
+          sailOpacityTwo(collapseOne);
           collapseTwo.style.display = 'none';
           collapseThree.style.display = 'none';
 
@@ -27,6 +45,7 @@ const accordionTwo = () => {
         } else {
           collapseOne.style.display = 'none';
           collapseTwo.style.display = 'block';
+          sailOpacityTwo(collapseTwo);
           collapseThree.style.display = 'none';
         }
       }
@@ -39,6 +58,7 @@ const accordionTwo = () => {
           collapseOne.style.display = 'none';
           collapseTwo.style.display = 'none';
           collapseThree.style.display = 'block';
+          sailOpacityTwo(collapseThree);
         }
       }
     });
