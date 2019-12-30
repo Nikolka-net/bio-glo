@@ -14,6 +14,7 @@ const modalWindow = () => {
         if (form) {
           for (const elem of form.elements) {//вытаскиваем из формы инпуты
             if (elem.tagName.toLowerCase() !== 'button' && elem.type !== 'button') {
+              elem.value = '';//очищаем инпуты
               if (elem.style.border === '2px solid red') {
                 elem.style.border = '';
               }
@@ -350,6 +351,7 @@ class SendFormCalc {
       popupCheck: document.querySelector('.popup-check'),
       popupConsultation: document.querySelector('.popup-consultation'),
     };
+    console.log('checkForm: ', this.elemDoccheckForm);
     //массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
     this.error = new Set();
   }
